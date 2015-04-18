@@ -6,10 +6,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.stevenlr.ld32.Game;
-import com.stevenlr.ld32.components.AnimatedSpriteRenderComponent;
+import com.stevenlr.ld32.Particles;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
-import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.entities.Item;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
@@ -19,6 +18,7 @@ import com.stevenlr.ld32.systems.MagneticMovementSystem;
 import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.ld32.systems.PlayerControlSystem;
 import com.stevenlr.ld32.systems.StaticTextureRenderSystem;
+import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
@@ -31,6 +31,8 @@ public class Level {
 	private Player _player;
 	private int _offsetX;
 	private int _offsetY;
+	private float _lastValidX;
+	private float _lastValidY;
 
 	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
@@ -91,7 +93,7 @@ public class Level {
 			}
 		}
 
-		_player = new Player(_playerSpawnX * Tile.SIZE, _playerSpawnY * Tile.SIZE);
+		respawn();
 	}
 
 	public void update(float dt) {
@@ -100,6 +102,31 @@ public class Level {
 		_playerControlSystem.update(dt);
 		_physicalMovementSystem.update(dt);
 		_itemManagerSystem.update(dt);
+
+		float dx = _player.getX() - _lastValidX;
+		float dy = _player.getY() - _lastValidY;
+		float dist = (float) Math.sqrt(dx * dx + dy * dy);
+
+		if (_player.getX() < 0 || _player.getY() < 0 || _player.getX() >= _width * Tile.SIZE || _player.getY() >= _height * Tile.SIZE
+				|| dist > Tile.SIZE * 3) {
+			Particles.spawnBloodParticles(_lastValidX, _lastValidY);
+			respawn();
+		} else {
+			_lastValidX = _player.getX();
+			_lastValidY = _player.getY();
+		}
+
+		Particles.bloodParticles.update(dt);
+	}
+
+	private void respawn() {
+		if (_player != null) {
+			Waffle.entitySystem.removeEntity(_player);
+		}
+
+		_player = new Player(_playerSpawnX * Tile.SIZE, _playerSpawnY * Tile.SIZE);
+		_lastValidX = _player.getX();
+		_lastValidY = _player.getY();
 	}
 
 	public void draw(Renderer r) {
@@ -136,6 +163,9 @@ public class Level {
 		_staticTextureRenderSystem.draw(r);
 		_animatedSpriteRenderSystem.draw(r);
 		_player.draw(r);
+
+		Particles.bloodParticles.draw(r);
+
 		r.restore();
 
 		_offsetX = x1;

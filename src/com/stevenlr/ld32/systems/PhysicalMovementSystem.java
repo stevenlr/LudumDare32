@@ -14,7 +14,7 @@ import com.stevenlr.waffle.entitysystem.entities.Entity;
 
 public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.systems.System {
 
-	public static final float GRAVITY = 9.8f * Tile.SIZE * 1000;
+	public static final float GRAVITY = 9.8f * Tile.SIZE * 500;
 	public static final float MAX_SPEED = Tile.SIZE * 30;
 	public static final float FLOOR_FRICTION = 0.8f;
 
@@ -42,11 +42,11 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 			if (e.hasComponent(CollisionComponent.class)) {
 				CollisionComponent box = e.getComponent(CollisionComponent.class);
 
-				level.tryMove(phys, phys.dx * dt, 0, box);
-				level.tryMove(phys, 0, phys.dy * dt, box);
-
 				tryMove(e, 0, phys.dy * dt);
 				tryMove(e, phys.dx * dt, 0);
+
+				level.tryMove(phys, phys.dx * dt, 0, box);
+				level.tryMove(phys, 0, phys.dy * dt, box);
 			}
 
 			phys.x += phys.dx * dt;

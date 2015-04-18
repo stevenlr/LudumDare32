@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Particles;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.entities.MagneticDevice;
@@ -27,14 +28,14 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 			PlayerComponent player = e.getComponent(PlayerComponent.class);
 
 			if (Waffle.keyboard.isDown(ControlsConfig.JUMP) && phys.onFloor) {
-				phys.ay -= 26000;
+				phys.ay -= 16000;
 			}
 
 			if (Waffle.keyboard.isDown(ControlsConfig.LEFT)) {
 				if (phys.onFloor) {
 					phys.ax -= 2000;
 				} else {
-					phys.ax -= 50;
+					phys.ax -= 100;
 				}
 
 				player.lastDirection = -1;
@@ -44,7 +45,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				if (phys.onFloor) {
 					phys.ax += 2000;
 				} else {
-					phys.ax += 50;
+					phys.ax += 100;
 				}
 
 				player.lastDirection = 1;
@@ -52,7 +53,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)
 					&& (player.selected == Player.BLUE_DEVICE || player.selected == Player.ORANGE_DEVICE)) {
-				float velocity = 800;
+				float velocity = 500;
 				float clickX = Waffle.mouse.getMouseX() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetX();
 				float clickY = Waffle.mouse.getMouseY() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetY();
 
