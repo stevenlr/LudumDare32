@@ -7,7 +7,7 @@
 	<property name="libdir" value="libs" />
 	<property name="lib" value="Waffle.jar" />
 	<property name="jarfile" value="LudumDare32.jar" />
-	<property name="mainclass" value="" />
+	<property name="mainclass" value="com.stevenlr.ld32.Game" />
 
 	<target name="build">
 		<ant target="clean" />
