@@ -47,8 +47,12 @@ public class GameScreen implements IScreen {
 		}
 
 		if (_level.isDone() && _level.getAnimation() <= 0) {
-			_currentLevel = Math.min(_currentLevel + 1, NB_LEVELS);
-			loadLevel();
+			if (_currentLevel == NB_LEVELS) {
+				Game.instance.setNextScreen(new EndScreen(true));
+			} else {
+				_currentLevel = Math.min(_currentLevel + 1, NB_LEVELS);
+				loadLevel();
+			}
 		}
 
 		_level.update(dt);

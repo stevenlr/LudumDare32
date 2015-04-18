@@ -25,6 +25,7 @@ public class Game implements IWaffleGame {
 
 	private float _time = 0;
 	private IScreen _currentScreen;
+	private IScreen _nextScreen;
 
 	public static void main(String[] args) {
 		Waffle.instance.startGame(instance);
@@ -37,6 +38,11 @@ public class Game implements IWaffleGame {
 
 	@Override
 	public void update(float dt) {
+		if (_nextScreen != null) {
+			_currentScreen = _nextScreen;
+			_nextScreen = null;
+		}
+
 		_time += dt;
 		_currentScreen.update(dt);
 	}
@@ -53,5 +59,9 @@ public class Game implements IWaffleGame {
 
 	public IScreen getCurrentScreen() {
 		return _currentScreen;
+	}
+
+	public void setNextScreen(IScreen screen) {
+		_nextScreen = screen;
 	}
 }
