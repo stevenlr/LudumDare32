@@ -8,7 +8,11 @@ import javax.imageio.ImageIO;
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
+import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
+import com.stevenlr.ld32.systems.PhysicalMovementSystem;
+import com.stevenlr.ld32.systems.PlayerControlSystem;
+import com.stevenlr.ld32.systems.StaticTextureRenderSystem;
 import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
@@ -19,6 +23,10 @@ public class Level {
 	private int _playerSpawnX;
 	private int _playerSpawnY;
 	private Player _player;
+
+	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
+	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
+	private StaticTextureRenderSystem _staticTextureRenderSystem = new StaticTextureRenderSystem();
 
 	public Level(String filename) {
 		BufferedImage img = null;
@@ -52,6 +60,7 @@ public class Level {
 					break;
 				case 0xff8000:
 					tile = Tile.empty;
+					new MetalCrate(x * Tile.SIZE, y * Tile.SIZE);
 					break;
 				}
 
@@ -60,6 +69,11 @@ public class Level {
 		}
 
 		_player = new Player(_playerSpawnX, _playerSpawnY);
+	}
+
+	public void update(float dt) {
+		_physicalMovementSystem.update(dt);
+		_playerControlSystem.update(dt);
 	}
 
 	public void draw(Renderer r) {
@@ -93,6 +107,7 @@ public class Level {
 			}
 		}
 
+		_staticTextureRenderSystem.draw(r);
 		_player.draw(r);
 		r.restore();
 	}
@@ -118,18 +133,18 @@ public class Level {
 				if (overlaps(tx * Tile.SIZE, ty * Tile.SIZE, Tile.SIZE, Tile.SIZE, x, y, box.sx, box.sy)) {
 					if (dx != 0) {
 						if (dx > 0) {
-							x = tx *  Tile.SIZE - box.sx - 0.01f;
+							x = tx *  Tile.SIZE - box.sx;
 						} else {
-							x = tx * Tile.SIZE + Tile.SIZE + 0.01f;
+							x = tx * Tile.SIZE + Tile.SIZE;
 						}
 
 						collision = true;
 					} else {
 						if (dy > 0) {
-							y = ty *  Tile.SIZE - box.sy - 0.01f;
+							y = ty *  Tile.SIZE - box.sy;
 							phys.onFloor = true;
 						} else {
-							y = ty * Tile.SIZE + Tile.SIZE + 0.01f;
+							y = ty * Tile.SIZE + Tile.SIZE;
 						}
 
 						collision = true;
@@ -155,8 +170,8 @@ public class Level {
 	}
 
 	private boolean overlaps(float x1, float y1, float sx1, float sy1, float x2, float y2, float sx2, float sy2) {
-		return (((x1 <= x2 + sx2 && x1 + sx1 >= x2) || (x2 <= x1 + sx1 && x2 + sx2 >= x1))
-				&& ((y1 <= y2 + sy2 && y1 + sy1 >= y2) || (y2 <= y1 + sy1 && y2 + sy2 >= y1)));
+		return (((x1 < x2 + sx2 && x1 + sx1 > x2) || (x2 < x1 + sx1 && x2 + sx2 > x1))
+				&& ((y1 < y2 + sy2 && y1 + sy1 > y2) || (y2 < y1 + sy1 && y2 + sy2 > y1)));
 	}
 
 	private Tile getTile(int tx, int ty) {
