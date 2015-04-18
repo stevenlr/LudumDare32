@@ -36,6 +36,8 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				} else {
 					phys.ax -= 50;
 				}
+
+				player.lastDirection = -1;
 			}
 
 			if (Waffle.keyboard.isDown(ControlsConfig.RIGHT)) {
@@ -44,6 +46,8 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				} else {
 					phys.ax += 50;
 				}
+
+				player.lastDirection = 1;
 			}
 
 			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)

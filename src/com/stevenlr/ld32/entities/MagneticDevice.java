@@ -21,9 +21,9 @@ public class MagneticDevice extends Entity {
 		AnimatedSpriteRenderComponent render;
 
 		if (direction > 0) {
-			render = new AnimatedSpriteRenderComponent((AnimatedSprite.Instance) Sprites.blueBallAnimation.getBlittable());
-		} else {
 			render = new AnimatedSpriteRenderComponent((AnimatedSprite.Instance) Sprites.orangeBallAnimation.getBlittable());
+		} else {
+			render = new AnimatedSpriteRenderComponent((AnimatedSprite.Instance) Sprites.blueBallAnimation.getBlittable());
 		}
 
 		addComponent(PhysicalComponent.class, _phys);

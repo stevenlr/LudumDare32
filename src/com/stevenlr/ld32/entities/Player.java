@@ -33,7 +33,11 @@ public class Player extends Entity {
 	}
 
 	public void draw(Renderer r) {
-		r.beginBlit(Sprites.player, _phys.x, _phys.y).blit();
+		if (_player.lastDirection >= 0) {
+			r.beginBlit(Sprites.player, _phys.x, _phys.y).blit();
+		} else {
+			r.beginBlit(Sprites.player, _phys.x, _phys.y).mirrorX().blit();
+		}
 	}
 
 	public float getX() {
