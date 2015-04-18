@@ -28,7 +28,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 			PhysicalComponent phys = e.getComponent(PhysicalComponent.class);
 			PlayerComponent player = e.getComponent(PlayerComponent.class);
 
-			if (Waffle.keyboard.isDown(ControlsConfig.JUMP) && phys.onFloor) {
+			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.JUMP) && phys.onFloor) {
 				phys.ay -= 16000;
 			}
 
@@ -54,7 +54,6 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)
 					&& (player.selected == Player.BLUE_DEVICE || player.selected == Player.ORANGE_DEVICE)) {
-				float velocity = 500;
 				float clickX = Waffle.mouse.getMouseX() / Game.PIXEL_SIZE + ((GameScreen) Game.instance.getCurrentScreen()).getLevel().getOffsetX();
 				float clickY = Waffle.mouse.getMouseY() / Game.PIXEL_SIZE + ((GameScreen) Game.instance.getCurrentScreen()).getLevel().getOffsetY();
 
@@ -71,6 +70,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 				dx /= dist;
 				dy /= dist;
+				float velocity = dist * 5;
 
 				if (direction != 0) {
 					((GameScreen) Game.instance.getCurrentScreen()).getLevel().removeOldDevices();

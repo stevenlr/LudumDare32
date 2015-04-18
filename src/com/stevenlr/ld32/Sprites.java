@@ -38,5 +38,7 @@ public class Sprites {
 		public static SpriteSheet.Region used = inventory.getRegion(0);
 		public static SpriteSheet.Region unused = inventory.getRegion(1);
 		public static SpriteSheet.Region absent = inventory.getRegion(2);
+
+		public static SpriteSheet.Region title = inventory.getRegion(0, 6, 8, 2);
 	}
 }

@@ -2,6 +2,7 @@ package com.stevenlr.ld32;
 
 import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.ld32.screens.IScreen;
+import com.stevenlr.ld32.screens.MainScreen;
 import com.stevenlr.waffle.IWaffleGame;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.WaffleGame;
@@ -33,7 +34,7 @@ public class Game implements IWaffleGame {
 
 	@Override
 	public void init() {
-		_currentScreen = new GameScreen();
+		_currentScreen = new MainScreen();
 	}
 
 	@Override
