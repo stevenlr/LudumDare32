@@ -1,6 +1,7 @@
 package com.stevenlr.ld32;
 
 import com.stevenlr.ld32.level.Level;
+import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.waffle.IWaffleGame;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.WaffleGame;
@@ -21,6 +22,7 @@ public class Game implements IWaffleGame {
 	public static final int PIXEL_SIZE = 2;
 
 	private Level level;
+	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 
 	public static void main(String[] args) {
 		Waffle.instance.startGame(new Game());
@@ -33,7 +35,7 @@ public class Game implements IWaffleGame {
 
 	@Override
 	public void update(float dt) {
-
+		_physicalMovementSystem.update(dt);
 	}
 
 	@Override

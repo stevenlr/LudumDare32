@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.Sprites;
+import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
@@ -16,6 +17,7 @@ public class Level {
 	private int _height;
 	private int _playerSpawnX;
 	private int _playerSpawnY;
+	private Player _player;
 
 	public Level(String filename) {
 		BufferedImage img = null;
@@ -55,6 +57,8 @@ public class Level {
 				_tiles[i] = tile;
 			}
 		}
+
+		_player = new Player(_playerSpawnX, _playerSpawnY);
 	}
 
 	public void draw(Renderer r) {
@@ -64,6 +68,6 @@ public class Level {
 			}
 		}
 
-		r.beginBlit(Sprites.player).blit();
+		_player.draw(r);
 	}
 }
