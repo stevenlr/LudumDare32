@@ -9,6 +9,7 @@ import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.components.StaticComponent;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.level.Tile;
+import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.entitysystem.entities.Entity;
 
@@ -17,7 +18,7 @@ public class ItemManagerSystem extends com.stevenlr.waffle.entitysystem.systems.
 	public void update(float dt) {
 		List<Entity> entities = Waffle.entitySystem.getEntitiesWithComponents(ItemComponent.class);
 		Iterator<Entity> it = entities.iterator();
-		Player player = Game.instance.getLevel().getPlayer();
+		Player player = ((GameScreen) Game.instance.getCurrentScreen()).getLevel().getPlayer();
 
 		while (it.hasNext()) {
 			Entity e = it.next();

@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 
 public class ControlsConfig {
 
+	public static final int SPACE = KeyEvent.VK_SPACE;
+	public static final int RESTART = KeyEvent.VK_R;
 	public static int JUMP = KeyEvent.VK_SPACE;
 	public static int LEFT = KeyEvent.VK_Q;
 	public static int RIGHT = KeyEvent.VK_D;

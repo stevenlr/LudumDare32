@@ -10,6 +10,7 @@ import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.entities.MagneticDevice;
 import com.stevenlr.ld32.entities.Player;
+import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.entitysystem.entities.Entity;
 
@@ -54,8 +55,8 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)
 					&& (player.selected == Player.BLUE_DEVICE || player.selected == Player.ORANGE_DEVICE)) {
 				float velocity = 500;
-				float clickX = Waffle.mouse.getMouseX() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetX();
-				float clickY = Waffle.mouse.getMouseY() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetY();
+				float clickX = Waffle.mouse.getMouseX() / Game.PIXEL_SIZE + ((GameScreen) Game.instance.getCurrentScreen()).getLevel().getOffsetX();
+				float clickY = Waffle.mouse.getMouseY() / Game.PIXEL_SIZE + ((GameScreen) Game.instance.getCurrentScreen()).getLevel().getOffsetY();
 
 				float dx = clickX - phys.x - Player.SX / 2;
 				float dy = clickY - phys.y - Player.SY / 2;
@@ -72,7 +73,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				dy /= dist;
 
 				if (direction != 0) {
-					Game.instance.getLevel().removeOldDevices();
+					((GameScreen) Game.instance.getCurrentScreen()).getLevel().removeOldDevices();
 					new MagneticDevice(phys.x + dx * 10, phys.y + dy * 10, dx * velocity + phys.dx, dy * velocity + phys.dy, direction);
 				}
 			}

@@ -13,6 +13,7 @@ public class Tile {
 	public static Tile ground = new Tile(2, true, Sprites.tiles.getRegion(3));
 	public static Tile doorTop = new Tile(3, false, Sprites.tiles.getRegion(0, 2));
 	public static Tile doorBottom = new Tile(4, false, Sprites.tiles.getRegion(0, 3));
+	public static Tile acid = new Tile(5, false, Sprites.tiles.getRegion(4));
 
 	protected IBlittable _texture;
 	protected int _id;

@@ -13,6 +13,7 @@ import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.entities.Item;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
+import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.ld32.systems.AnimatedSpriteRenderSystem;
 import com.stevenlr.ld32.systems.ItemManagerSystem;
 import com.stevenlr.ld32.systems.MagneticMovementSystem;
@@ -26,7 +27,6 @@ import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
 
-	private String _filename;
 	private Tile[] _tiles;
 	private int _width;
 	private int _height;
@@ -42,6 +42,7 @@ public class Level {
 	private boolean _hasStarted = false;
 	private boolean _isDone = false;
 	private float _animation = 0;
+	private int _id;
 
 	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
@@ -49,17 +50,22 @@ public class Level {
 	private AnimatedSpriteRenderSystem _animatedSpriteRenderSystem = new AnimatedSpriteRenderSystem();
 	private MagneticMovementSystem _magneticMovementSystem = new MagneticMovementSystem();
 	private ItemManagerSystem _itemManagerSystem = new ItemManagerSystem();
+	private String _deathCause;
 
-	public Level(String filename) {
-		_filename = filename;
+	public String getDeathCause() {
+		return _deathCause;
+	}
+
+	public Level(int id) {
+		_id = id;
 		reload();
 	}
 
-	private void reload() {
+	public void reload() {
 		BufferedImage img = null;
 
 		try {
-			img = ImageIO.read(Game.class.getResourceAsStream(_filename));
+			img = ImageIO.read(Game.class.getResourceAsStream("/levels/level" + _id + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -90,7 +96,7 @@ public class Level {
 				case 0x000000:
 					tile = Tile.wall;
 
-					if (y >= 1 && (img.getRGB(x, y - 1) & 0xffffff) != 0x000000) {
+					if (y >= 1 && (img.getRGB(x, y - 1) & 0xffffff) != 0x000000 && (img.getRGB(x, y - 1) & 0xffffff) != 0xff0000) {
 						tile = Tile.ground;
 					}
 					break;
@@ -102,6 +108,9 @@ public class Level {
 					tile = Tile.doorTop;
 					_goalX = x * Tile.SIZE + Tile.SIZE / 2;
 					_goalY = (y + 1) * Tile.SIZE;
+					break;
+				case 0xff0000:
+					tile = Tile.acid;
 					break;
 				}
 
@@ -116,10 +125,15 @@ public class Level {
 			}
 		}
 
+		_animation = 0;
+		_hasStarted = false;
+		_isDone = false;
 		respawn();
 	}
 
 	public void update(float dt) {
+		Particles.bloodParticles.update(dt);
+
 		if (!_hasStarted) {
 			_animation += dt;
 
@@ -155,9 +169,17 @@ public class Level {
 		if (_player.getX() < 0 || _player.getY() < 0 || _player.getX() >= _width * Tile.SIZE || _player.getY() >= _height * Tile.SIZE
 				|| dist > Tile.SIZE * 3) {
 			_player.die();
+			Particles.spawnBloodParticles(_lastValidX, _lastValidY);
+			_deathCause = "You got crushed";
 		} else {
 			_lastValidX = _player.getX();
 			_lastValidY = _player.getY();
+		}
+
+		if (isInAcid()) {
+			Particles.spawnBloodParticles(_lastValidX, _lastValidY);
+			_deathCause = "You tried to swim in acid";
+			_player.die();
 		}
 
 		dx = _player.getX() - _goalX;
@@ -168,8 +190,6 @@ public class Level {
 			_isDone = true;
 			_animation = 1;
 		}
-
-		Particles.bloodParticles.update(dt);
 	}
 
 	private void respawn() {
@@ -183,19 +203,19 @@ public class Level {
 	}
 
 	public void draw(Renderer r) {
-		int x1 = (int) Math.max(_player.getX() - Game.LEVEL_WINDOW_WIDTH / 2 - _player.SX / 2, 0);
-		int y1 = (int) Math.max(_player.getY() - Game.LEVEL_WINDOW_HEIGHT / 2 - _player.SY / 2, 0);
+		int x1 = (int) Math.max(_player.getX() - GameScreen.LEVEL_WINDOW_WIDTH / 2 - _player.SX / 2, 0);
+		int y1 = (int) Math.max(_player.getY() - GameScreen.LEVEL_WINDOW_HEIGHT / 2 - _player.SY / 2, 0);
 
-		int x2 = x1 + Game.LEVEL_WINDOW_WIDTH;
-		int y2 = y1 + Game.LEVEL_WINDOW_HEIGHT;
+		int x2 = x1 + GameScreen.LEVEL_WINDOW_WIDTH;
+		int y2 = y1 + GameScreen.LEVEL_WINDOW_HEIGHT;
 
 		if (x2 > _width * Tile.SIZE) {
-			x1 = _width * Tile.SIZE - Game.LEVEL_WINDOW_WIDTH;
+			x1 = _width * Tile.SIZE - GameScreen.LEVEL_WINDOW_WIDTH;
 			x2 = _width * Tile.SIZE;
 		}
 
 		if (y2 > _height * Tile.SIZE) {
-			y1 = _height * Tile.SIZE - Game.LEVEL_WINDOW_HEIGHT;
+			y1 = _height * Tile.SIZE - GameScreen.LEVEL_WINDOW_HEIGHT;
 			y2 = _height * Tile.SIZE;
 		}
 
@@ -308,10 +328,11 @@ public class Level {
 	}
 
 	public void drawInventory(Renderer r) {
+		r.fillRect(0, 0, GameScreen.INVENTORY_WINDOW_WIDTH, GameScreen.INVENTORY_WINDOW_HEIGHT, Color.Black);
 		r.save();
 		r.translate(9, 9);
 
-		r.drawText("Level 1", Color.White, Fonts.fontNormal, 0, 16, Font.HorizontalAlign.LEFT, Font.VerticalAlign.MIDDLE);
+		r.drawText("Level " + _id, Color.White, Fonts.fontNormal, 0, 16, Font.HorizontalAlign.LEFT, Font.VerticalAlign.MIDDLE);
 
 		r.translate(200, 0);
 		_player.drawInventory(r);
@@ -336,5 +357,21 @@ public class Level {
 
 	public boolean isDead() {
 		return _player.isDead();
+	}
+
+	boolean isInAcid() {
+		int x1 = (int) (_player.getX() / Tile.SIZE);
+		int y1 = (int) (_player.getY() / Tile.SIZE);
+		int x2 = (int) ((_player.getX() + Player.SX) / Tile.SIZE);
+		int y2 = (int) ((_player.getY() + Player.SY * 0.75) / Tile.SIZE);
+
+		for (int y = y1; y <= y2; ++y) {
+			for (int x = x1; x <= x2; ++x) {
+				if (getTile(x, y).getId() ==  Tile.acid.getId()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
