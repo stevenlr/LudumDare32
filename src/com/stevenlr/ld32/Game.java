@@ -6,6 +6,7 @@ import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.WaffleGame;
 import com.stevenlr.waffle.graphics.Canvas;
 import com.stevenlr.waffle.graphics.Color;
+import com.stevenlr.waffle.graphics.Font;
 import com.stevenlr.waffle.graphics.Renderer;
 
 @WaffleGame (
@@ -65,10 +66,33 @@ public class Game implements IWaffleGame {
 		_level.drawInventory(_inventoryCanvas.getRenderer());
 
 		if (!_level.hasStarted() || _level.isDone()) {
-			r.setCustomComposite(false, Color.Black, 1 - _level.getAnimation());
+			float animation = _level.getAnimation();
+
+			if (animation > 0) {
+				r.setCustomComposite(false, Color.Black, 1 - animation);
+			} else {
+				r.setCustomComposite(false, Color.Black, 1);
+			}
+
 			r.beginBlit(_gameCanvas, 0, 0).blit();
 			r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
 			r.endCustomComposite();
+		} else if (_level.isDead()) {
+			float animation = _level.getAnimation();
+
+			if (animation < 1) {
+				r.setCustomComposite(false, Color.Red, animation);
+			} else if (animation < 2) {
+				r.setCustomComposite(false, new Color((int) ((1 - (animation - 1)) * 255), 0, 0), 1);
+			} else {
+				r.setCustomComposite(false, Color.Black, 1);
+			}
+
+			r.beginBlit(_gameCanvas, 0, 0).blit();
+			r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
+			r.endCustomComposite();
+
+			r.drawText("YOU DIED", Color.White, Fonts.fontNormal, WIDTH / 2, HEIGHT / 2, Font.HorizontalAlign.MIDDLE, Font.VerticalAlign.MIDDLE);
 		} else {
 			r.beginBlit(_gameCanvas, 0, 0).blit();
 			r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();

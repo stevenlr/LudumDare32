@@ -26,6 +26,7 @@ import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
 
+	private String _filename;
 	private Tile[] _tiles;
 	private int _width;
 	private int _height;
@@ -50,10 +51,15 @@ public class Level {
 	private ItemManagerSystem _itemManagerSystem = new ItemManagerSystem();
 
 	public Level(String filename) {
+		_filename = filename;
+		reload();
+	}
+
+	private void reload() {
 		BufferedImage img = null;
 
 		try {
-			img = ImageIO.read(Game.class.getResourceAsStream(filename));
+			img = ImageIO.read(Game.class.getResourceAsStream(_filename));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -129,6 +135,13 @@ public class Level {
 			return;
 		}
 
+		if (_player.isDead()) {
+			_animation += dt;
+			return;
+		}
+
+		_animation = 0;
+
 		_animatedSpriteRenderSystem.update(dt);
 		_magneticMovementSystem.update(dt);
 		_playerControlSystem.update(dt);
@@ -141,8 +154,7 @@ public class Level {
 
 		if (_player.getX() < 0 || _player.getY() < 0 || _player.getX() >= _width * Tile.SIZE || _player.getY() >= _height * Tile.SIZE
 				|| dist > Tile.SIZE * 3) {
-			Particles.spawnBloodParticles(_lastValidX, _lastValidY);
-			respawn();
+			_player.die();
 		} else {
 			_lastValidX = _player.getX();
 			_lastValidY = _player.getY();
@@ -152,7 +164,7 @@ public class Level {
 		dy = _player.getY() - _goalY;
 		dist = (float) Math.sqrt(dx * dx + dy * dy);
 
-		if (dist < 16) {
+		if (dist < 16 && !_player.isDead()) {
 			_isDone = true;
 			_animation = 1;
 		}
@@ -320,5 +332,9 @@ public class Level {
 
 	public float getAnimation() {
 		return _animation;
+	}
+
+	public boolean isDead() {
+		return _player.isDead();
 	}
 }

@@ -33,6 +33,10 @@ public class Player extends Entity {
 	}
 
 	public void draw(Renderer r) {
+		if (_player.isDead) {
+			return;
+		}
+
 		if (_player.lastDirection >= 0) {
 			r.beginBlit(Sprites.player, _phys.x, _phys.y).blit();
 		} else {
@@ -75,5 +79,13 @@ public class Player extends Entity {
 				r.beginBlit(getItemIcon(i), 47 * i, 0).blit();
 			}
 		}
+	}
+
+	public boolean isDead() {
+		return _player.isDead;
+	}
+
+	public void die() {
+		_player.isDead = true;
 	}
 }
