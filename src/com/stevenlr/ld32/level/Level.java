@@ -10,6 +10,7 @@ import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
+import com.stevenlr.ld32.systems.MagneticMovementSystem;
 import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.ld32.systems.PlayerControlSystem;
 import com.stevenlr.ld32.systems.StaticTextureRenderSystem;
@@ -27,6 +28,7 @@ public class Level {
 	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
 	private StaticTextureRenderSystem _staticTextureRenderSystem = new StaticTextureRenderSystem();
+	private MagneticMovementSystem _magneticMovementSystem = new MagneticMovementSystem();
 
 	public Level(String filename) {
 		BufferedImage img = null;
@@ -72,8 +74,9 @@ public class Level {
 	}
 
 	public void update(float dt) {
-		_physicalMovementSystem.update(dt);
+		_magneticMovementSystem.update(dt);
 		_playerControlSystem.update(dt);
+		_physicalMovementSystem.update(dt);
 	}
 
 	public void draw(Renderer r) {

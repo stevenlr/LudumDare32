@@ -2,6 +2,7 @@ package com.stevenlr.ld32.entities;
 
 import com.stevenlr.ld32.Sprites;
 import com.stevenlr.ld32.components.CollisionComponent;
+import com.stevenlr.ld32.components.MagneticComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.StaticTextureRenderComponent;
 import com.stevenlr.ld32.level.Tile;
@@ -20,5 +21,6 @@ public class MetalCrate extends Entity {
 		addComponent(PhysicalComponent.class, phys);
 		addComponent(CollisionComponent.class, collision);
 		addComponent(StaticTextureRenderComponent.class, render);
+		addComponent(MagneticComponent.class, new MagneticComponent());
 	}
 }

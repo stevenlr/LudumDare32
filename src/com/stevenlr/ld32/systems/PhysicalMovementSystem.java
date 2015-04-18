@@ -45,8 +45,8 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 				level.tryMove(phys, phys.dx * dt, 0, box);
 				level.tryMove(phys, 0, phys.dy * dt, box);
 
-				tryMove(e, phys.dx * dt, 0);
 				tryMove(e, 0, phys.dy * dt);
+				tryMove(e, phys.dx * dt, 0);
 			}
 
 			phys.x += phys.dx * dt;
@@ -90,6 +90,10 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 				}
 
 				if (penetration[1] != 0 && dy != 0) {
+					if (dy > 0) {
+						phys.onFloor = true;
+					}
+
 					phys.dy = 0;
 					collision = true;
 				}

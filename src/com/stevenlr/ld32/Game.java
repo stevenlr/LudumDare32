@@ -1,5 +1,7 @@
 package com.stevenlr.ld32;
 
+import java.awt.event.KeyEvent;
+
 import com.stevenlr.ld32.level.Level;
 import com.stevenlr.waffle.IWaffleGame;
 import com.stevenlr.waffle.Waffle;
