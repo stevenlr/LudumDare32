@@ -27,6 +27,7 @@ import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
 
+	private boolean[] _startingInventory;
 	private Tile[] _tiles;
 	private int _width;
 	private int _height;
@@ -58,6 +59,12 @@ public class Level {
 
 	public Level(int id) {
 		_id = id;
+		reload();
+	}
+
+	public Level(int id, boolean[] inventory) {
+		_id = id;
+		_startingInventory = inventory;
 		reload();
 	}
 
@@ -197,7 +204,7 @@ public class Level {
 			Waffle.entitySystem.removeEntity(_player);
 		}
 
-		_player = new Player(_playerSpawnX * Tile.SIZE, _playerSpawnY * Tile.SIZE);
+		_player = new Player(_playerSpawnX * Tile.SIZE, _playerSpawnY * Tile.SIZE, _startingInventory);
 		_lastValidX = _player.getX();
 		_lastValidY = _player.getY();
 	}

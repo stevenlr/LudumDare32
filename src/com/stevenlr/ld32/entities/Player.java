@@ -23,9 +23,13 @@ public class Player extends Entity {
 	private PlayerComponent _player;
 
 	public Player(float x, float y) {
+		this(x, y, null);
+	}
+
+	public Player(float x, float y, boolean[] startingInventory) {
 		_phys = new PhysicalComponent(x, y - SY + Tile.SIZE, 0, 0);
 		CollisionComponent collision = new CollisionComponent(SX, SY);
-		_player = new PlayerComponent();
+		_player = new PlayerComponent(startingInventory);
 
 		addComponent(PhysicalComponent.class, _phys);
 		addComponent(CollisionComponent.class, collision);

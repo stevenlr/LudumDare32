@@ -3,6 +3,7 @@ package com.stevenlr.ld32.screens;
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.level.Level;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.graphics.Canvas;
@@ -30,8 +31,15 @@ public class GameScreen implements IScreen {
 	}
 
 	private void loadLevel() {
-		Waffle.entitySystem.clearAll();
-		_level = new Level(_currentLevel);
+		if (_level != null) {
+			boolean[] inventory = _level.getPlayer().getComponent(PlayerComponent.class).inventory;
+			
+			Waffle.entitySystem.clearAll();
+			_level = new Level(_currentLevel, inventory);
+		} else {
+			Waffle.entitySystem.clearAll();
+			_level = new Level(_currentLevel);
+		}
 	}
 
 	public Level getLevel() {

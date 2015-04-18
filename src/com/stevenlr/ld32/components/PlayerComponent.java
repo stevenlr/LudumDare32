@@ -14,4 +14,16 @@ public class PlayerComponent extends Component {
 			inventory[i] = false;
 		}
 	}
+
+	public PlayerComponent(boolean[] state) {
+		if (state != null) {
+			for (int i = 0; i < 4; ++i) {
+				inventory[i] = state[i];
+			}
+		} else {
+			for (int i = 0; i < 4; ++i) {
+				inventory[i] = false;
+			}
+		}
+	}
 }
