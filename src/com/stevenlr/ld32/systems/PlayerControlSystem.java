@@ -27,6 +27,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 			Entity e = it.next();
 			PhysicalComponent phys = e.getComponent(PhysicalComponent.class);
 			PlayerComponent player = e.getComponent(PlayerComponent.class);
+			boolean moving = false;
 
 			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.JUMP) && phys.onFloor) {
 				phys.ay -= 16000;
@@ -40,6 +41,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				}
 
 				player.lastDirection = -1;
+				moving = true;
 			}
 
 			if (Waffle.keyboard.isDown(ControlsConfig.RIGHT)) {
@@ -50,6 +52,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				}
 
 				player.lastDirection = 1;
+				moving = true;
 			}
 
 			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)
@@ -105,6 +108,10 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SELECT_CHEMICALS)) {
 				player.selected = Player.CHEMICALS;
+			}
+
+			if (moving && phys.onFloor) {
+				player.sprite.update(dt);
 			}
 		}
 	}
