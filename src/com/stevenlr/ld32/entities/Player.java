@@ -71,6 +71,21 @@ public class Player extends Entity {
 		}
 	}
 
+	public static String getItemName(int i) {
+		switch(i) {
+		case BLUE_DEVICE:
+			return "the attractor";
+		case ORANGE_DEVICE:
+			return "the repeller";
+		case KNIFE:
+			return "a knife";
+		case CHEMICALS:
+			return " some HK-21";
+		default:
+			return "";
+		}
+	}
+
 	public void drawInventory(Renderer r) {
 		for (int i = 0; i < 4; ++i) {
 			if (i == _player.selected) {

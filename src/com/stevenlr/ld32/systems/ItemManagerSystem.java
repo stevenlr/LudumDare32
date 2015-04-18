@@ -9,6 +9,7 @@ import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.components.StaticComponent;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.level.Tile;
+import com.stevenlr.ld32.screens.FoundItemScreen;
 import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.entitysystem.entities.Entity;
@@ -31,8 +32,11 @@ public class ItemManagerSystem extends com.stevenlr.waffle.entitysystem.systems.
 			float dist = (float) Math.sqrt(dx * dx + dy * dy);
 
 			if (dist < Tile.SIZE) {
-				player.getComponent(PlayerComponent.class).inventory[e.getComponent(ItemComponent.class).item] = true;
+				int item = e.getComponent(ItemComponent.class).item;
+
+				player.getComponent(PlayerComponent.class).inventory[item] = true;
 				Waffle.entitySystem.removeEntity(e);
+				Game.instance.setNextScreen(new FoundItemScreen(Game.instance.getCurrentScreen(), Player.getItemName(item)));
 			}
 		}
 	}

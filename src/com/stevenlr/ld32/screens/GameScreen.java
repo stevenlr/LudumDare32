@@ -13,7 +13,7 @@ import com.stevenlr.waffle.graphics.Renderer;
 
 public class GameScreen implements IScreen {
 
-	public static final int NB_LEVELS = 3;
+	public static final int NB_LEVELS = 5;
 	public static final int INVENTORY_WINDOW_WIDTH = Game.WIDTH;
 	public static final int INVENTORY_WINDOW_HEIGHT = 50;
 	public static final int LEVEL_WINDOW_WIDTH = Game.WIDTH;
@@ -33,7 +33,7 @@ public class GameScreen implements IScreen {
 	private void loadLevel() {
 		if (_level != null) {
 			boolean[] inventory = _level.getPlayer().getComponent(PlayerComponent.class).inventory;
-			
+
 			Waffle.entitySystem.clearAll();
 			_level = new Level(_currentLevel, inventory);
 		} else {
