@@ -12,7 +12,7 @@
 	<target name="build">
 		<ant target="clean" />
 		<mkdir dir="${build}" />
-		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" target="1.7">
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" target="1.7" source="1.7">
 			<classpath>
 				<pathelement path="${libdir}/${lib}" />
 			</classpath>
