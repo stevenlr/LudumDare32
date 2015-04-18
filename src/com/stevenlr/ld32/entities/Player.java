@@ -13,19 +13,27 @@ public class Player extends Entity {
 	public static final int SX = 12;
 	public static final int SY = 30;
 
+	private PhysicalComponent _phys;
+
 	public Player(float x, float y) {
-		PhysicalComponent physical = new PhysicalComponent(x, y - SY + Tile.SIZE, 0, 0);
+		_phys = new PhysicalComponent(x, y - SY + Tile.SIZE, 0, 0);
 		CollisionComponent collision = new CollisionComponent(SX, SY);
 		PlayerComponent player = new PlayerComponent();
 
-		addComponent(PhysicalComponent.class, physical);
+		addComponent(PhysicalComponent.class, _phys);
 		addComponent(CollisionComponent.class, collision);
 		addComponent(PlayerComponent.class, player);
 	}
 
 	public void draw(Renderer r) {
-		PhysicalComponent phys = getComponent(PhysicalComponent.class);
+		r.beginBlit(Sprites.player, _phys.x, _phys.y).blit();
+	}
 
-		r.beginBlit(Sprites.player, phys.x, phys.y).blit();
+	public float getX() {
+		return _phys.x;
+	}
+
+	public float getY() {
+		return _phys.y;
 	}
 }

@@ -63,13 +63,38 @@ public class Level {
 	}
 
 	public void draw(Renderer r) {
-		for (int y = 0; y < _height; ++y) {
-			for (int x = 0; x < _width; ++x) {
-				_tiles[x + y * _width].draw(r, x * Tile.SIZE, y * Tile.SIZE);
+		int x1 = (int) Math.max(_player.getX() - Game.LEVEL_WINDOW_WIDTH / 2 - _player.SX / 2, 0);
+		int y1 = (int) Math.max(_player.getY() - Game.LEVEL_WINDOW_HEIGHT / 2 - _player.SY / 2, 0);
+
+		int x2 = x1 + Game.LEVEL_WINDOW_WIDTH;
+		int y2 = y1 + Game.LEVEL_WINDOW_HEIGHT;
+
+		if (x2 > _width * Tile.SIZE) {
+			x1 = _width * Tile.SIZE - Game.LEVEL_WINDOW_WIDTH;
+			x2 = _width * Tile.SIZE;
+		}
+
+		if (y2 > _height * Tile.SIZE) {
+			y1 = _height * Tile.SIZE - Game.LEVEL_WINDOW_HEIGHT;
+			y2 = _height * Tile.SIZE;
+		}
+
+		r.save();
+		r.translate(-x1, -y1);
+
+		int tx1 = (int) Math.floor(x1 / Tile.SIZE);
+		int tx2 = (int) Math.ceil(x2 / Tile.SIZE);
+		int ty1 = (int) Math.floor(y1 / Tile.SIZE);
+		int ty2 = (int) Math.ceil(y2 / Tile.SIZE);
+
+		for (int y = ty1; y <= ty2; ++y) {
+			for (int x = tx1; x <= tx2; ++x) {
+				getTile(x, y).draw(r, x * Tile.SIZE, y * Tile.SIZE);
 			}
 		}
 
 		_player.draw(r);
+		r.restore();
 	}
 
 	public void tryMove(PhysicalComponent phys, float dx, float dy, CollisionComponent box) {
@@ -116,7 +141,6 @@ public class Level {
 		phys.x = x;
 		phys.y = y;
 
-		// TODO: bounce, friction, etc.
 		if (collision) {
 			if (dx != 0) {
 				phys.dx = 0;
