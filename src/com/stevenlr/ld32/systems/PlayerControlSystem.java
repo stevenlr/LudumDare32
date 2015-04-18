@@ -46,9 +46,19 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 			}
 
 			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)) {
-				float velocity = 1000;
+				float velocity = 800;
+				float clickX = Waffle.mouse.getMouseX() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetX();
+				float clickY = Waffle.mouse.getMouseY() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetY();
+
+				float dx = clickX - phys.x - Player.SX / 2;
+				float dy = clickY - phys.y - Player.SY / 2;
+				float dist = (float) Math.sqrt(dx * dx + dy * dy);
+
+				dx /= dist;
+				dy /= dist;
+
 				Game.instance.getLevel().removeOldDevices();
-				new MagneticDevice(phys.x + Player.SX, phys.y, velocity, -velocity);
+				new MagneticDevice(phys.x + dx * 10, phys.y + dy * 10, dx * velocity + phys.dx, dy * velocity + phys.dy);
 			}
 		}
 	}

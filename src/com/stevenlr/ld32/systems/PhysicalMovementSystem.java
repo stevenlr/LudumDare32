@@ -67,6 +67,7 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 		float x = phys.x + dx;
 		float y = phys.y + dy;
 		boolean collision = false;
+		boolean isPlayer = entity.hasComponent(PlayerComponent.class);
 
 		while (it.hasNext()) {
 			Entity e = it.next();
@@ -77,6 +78,10 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 
 			PhysicalComponent phys2 = e.getComponent(PhysicalComponent.class);
 			CollisionComponent box2 = e.getComponent(CollisionComponent.class);
+
+			if (isPlayer && !box2.collidesWithPlayer) {
+				continue;
+			}
 
 			if (overlaps(x, y, box.sx, box.sy, phys2.x, phys2.y, box2.sx, box2.sy)) {
 				float[] penetration = getShortestPenetration(x, y, box.sx, box.sy, phys2.x, phys2.y, box2.sx, box2.sy);

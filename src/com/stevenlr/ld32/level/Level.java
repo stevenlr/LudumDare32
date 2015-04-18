@@ -6,10 +6,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.components.AnimatedSpriteRenderComponent;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
+import com.stevenlr.ld32.systems.AnimatedSpriteRenderSystem;
 import com.stevenlr.ld32.systems.MagneticMovementSystem;
 import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.ld32.systems.PlayerControlSystem;
@@ -24,10 +26,13 @@ public class Level {
 	private int _playerSpawnX;
 	private int _playerSpawnY;
 	private Player _player;
+	private int _offsetX;
+	private int _offsetY;
 
 	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
 	private StaticTextureRenderSystem _staticTextureRenderSystem = new StaticTextureRenderSystem();
+	private AnimatedSpriteRenderSystem _animatedSpriteRenderSystem = new AnimatedSpriteRenderSystem();
 	private MagneticMovementSystem _magneticMovementSystem = new MagneticMovementSystem();
 
 	public Level(String filename) {
@@ -74,6 +79,7 @@ public class Level {
 	}
 
 	public void update(float dt) {
+		_animatedSpriteRenderSystem.update(dt);
 		_magneticMovementSystem.update(dt);
 		_playerControlSystem.update(dt);
 		_physicalMovementSystem.update(dt);
@@ -111,8 +117,12 @@ public class Level {
 		}
 
 		_staticTextureRenderSystem.draw(r);
+		_animatedSpriteRenderSystem.draw(r);
 		_player.draw(r);
 		r.restore();
+
+		_offsetX = x1;
+		_offsetY = y1;
 	}
 
 	public void tryMove(PhysicalComponent phys, float dx, float dy, CollisionComponent box) {
@@ -187,5 +197,13 @@ public class Level {
 
 	public void removeOldDevices() {
 		_magneticMovementSystem.removeOldDevices();
+	}
+
+	public int getOffsetX() {
+		return _offsetX;
+	}
+
+	public int getOffsetY() {
+		return _offsetY;
 	}
 }

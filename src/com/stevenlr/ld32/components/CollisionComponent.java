@@ -7,8 +7,15 @@ public class CollisionComponent extends Component {
 
 	public float sx = Tile.SIZE;
 	public float sy = Tile.SIZE;
+	public boolean collidesWithPlayer = true;
 
 	public CollisionComponent() {
+	}
+
+	public CollisionComponent(float sx, float sy, boolean collidesWithPlayer) {
+		this.sx = sx;
+		this.sy = sy;
+		this.collidesWithPlayer = collidesWithPlayer;
 	}
 
 	public CollisionComponent(float sx, float sy) {
