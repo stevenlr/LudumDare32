@@ -10,9 +10,11 @@ import com.stevenlr.ld32.components.AnimatedSpriteRenderComponent;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
+import com.stevenlr.ld32.entities.Item;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.systems.AnimatedSpriteRenderSystem;
+import com.stevenlr.ld32.systems.ItemManagerSystem;
 import com.stevenlr.ld32.systems.MagneticMovementSystem;
 import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.ld32.systems.PlayerControlSystem;
@@ -35,6 +37,7 @@ public class Level {
 	private StaticTextureRenderSystem _staticTextureRenderSystem = new StaticTextureRenderSystem();
 	private AnimatedSpriteRenderSystem _animatedSpriteRenderSystem = new AnimatedSpriteRenderSystem();
 	private MagneticMovementSystem _magneticMovementSystem = new MagneticMovementSystem();
+	private ItemManagerSystem _itemManagerSystem = new ItemManagerSystem();
 
 	public Level(String filename) {
 		BufferedImage img = null;
@@ -53,8 +56,9 @@ public class Level {
 			for (int x = 0; x < _width; ++x) {
 				int i = y * _width + x;
 				Tile tile = Tile.wall;
+				int color = img.getRGB(x, y) & 0xffffff;
 
-				switch (img.getRGB(x, y) & 0xffffff) {
+				switch (color) {
 				case 0x00ff00:
 					_playerSpawnX = x;
 					_playerSpawnY = y;
@@ -76,6 +80,13 @@ public class Level {
 					break;
 				}
 
+				if ((color & 0xfffff0) == 0x00ff80) {
+					int item = color & (~0x00ff80);
+
+					new Item(item, x * Tile.SIZE + Tile.SIZE / 2 - 16, y * Tile.SIZE + Tile.SIZE / 2 - 16);
+					tile = Tile.empty;
+				}
+
 				_tiles[i] = tile;
 			}
 		}
@@ -88,6 +99,7 @@ public class Level {
 		_magneticMovementSystem.update(dt);
 		_playerControlSystem.update(dt);
 		_physicalMovementSystem.update(dt);
+		_itemManagerSystem.update(dt);
 	}
 
 	public void draw(Renderer r) {
@@ -217,5 +229,9 @@ public class Level {
 		r.translate(9, 9);
 		_player.drawInventory(r);
 		r.restore();
+	}
+
+	public Player getPlayer() {
+		return _player;
 	}
 }

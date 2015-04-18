@@ -50,7 +50,7 @@ public class MagneticMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 				factor = device.getComponent(MagneticDeviceComponent.class).direction;
 			}
 
-			float strength = (float) (3000 / Math.pow(dist / Tile.SIZE / 4, 2) * factor);
+			float strength = (float) (3000 / Math.pow(dist / Tile.SIZE / 3, 2) * factor);
 
 			float ax = strength * dx / dist;
 			float ay = strength * dy / dist;

@@ -58,9 +58,9 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				float direction = 0;
 
 				if (player.selected == Player.BLUE_DEVICE && player.inventory[Player.BLUE_DEVICE]) {
-					direction = 1;
-				} else if (player.selected == Player.ORANGE_DEVICE && player.inventory[Player.ORANGE_DEVICE]){
 					direction = -1;
+				} else if (player.selected == Player.ORANGE_DEVICE && player.inventory[Player.ORANGE_DEVICE]){
+					direction = 1;
 				}
 
 				dx /= dist;

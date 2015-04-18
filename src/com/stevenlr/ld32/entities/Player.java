@@ -44,7 +44,7 @@ public class Player extends Entity {
 		return _phys.y;
 	}
 
-	private IBlittable getIcon(int i) {
+	public static IBlittable getItemIcon(int i) {
 		switch(i) {
 		case BLUE_DEVICE:
 			return Sprites.Inventory.blueDevice;
@@ -68,7 +68,7 @@ public class Player extends Entity {
 			}
 
 			if (_player.inventory[i]) {
-				r.beginBlit(getIcon(i), 47 * i + 100, 0).blit();
+				r.beginBlit(getItemIcon(i), 47 * i + 100, 0).blit();
 			}
 		}
 	}

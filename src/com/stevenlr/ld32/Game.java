@@ -1,7 +1,5 @@
 package com.stevenlr.ld32;
 
-import java.awt.event.KeyEvent;
-
 import com.stevenlr.ld32.level.Level;
 import com.stevenlr.waffle.IWaffleGame;
 import com.stevenlr.waffle.Waffle;
@@ -36,6 +34,8 @@ public class Game implements IWaffleGame {
 	private Canvas _gameCanvas;
 	private Canvas _inventoryCanvas;
 
+	private float _time = 0;
+
 	public static void main(String[] args) {
 		Waffle.instance.startGame(instance);
 	}
@@ -53,6 +53,7 @@ public class Game implements IWaffleGame {
 
 	@Override
 	public void update(float dt) {
+		_time += dt;
 		_level.update(dt);
 	}
 
@@ -65,5 +66,9 @@ public class Game implements IWaffleGame {
 
 		r.beginBlit(_gameCanvas, 0, 0).blit();
 		r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
+	}
+
+	public float getTime() {
+		return _time;
 	}
 }
