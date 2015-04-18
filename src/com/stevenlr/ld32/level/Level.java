@@ -6,7 +6,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.stevenlr.ld32.Game;
-import com.stevenlr.ld32.Sprites;
+import com.stevenlr.ld32.components.CollisionComponent;
+import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.waffle.graphics.Renderer;
 
@@ -69,5 +70,76 @@ public class Level {
 		}
 
 		_player.draw(r);
+	}
+
+	public void tryMove(PhysicalComponent phys, float dx, float dy, CollisionComponent box) {
+		float x = phys.x + dx;
+		float y = phys.y + dy;
+		boolean collision = false;
+
+		int x1 = (int) Math.floor(x / Tile.SIZE);
+		int x2 = (int) Math.ceil((x + box.sx) / Tile.SIZE);
+		int y1 = (int) Math.floor(y / Tile.SIZE);
+		int y2 = (int) Math.ceil((y + box.sy) / Tile.SIZE);
+
+		for (int ty = y1; ty <= y2; ++ty) {
+			for (int tx = x1; tx <= x2; ++tx) {
+				Tile tile = getTile(tx, ty);
+
+				if (!tile.hasCollision()) {
+					continue;
+				}
+
+				if (overlaps(tx * Tile.SIZE, ty * Tile.SIZE, Tile.SIZE, Tile.SIZE, x, y, box.sx, box.sy)) {
+					if (dx != 0) {
+						if (dx > 0) {
+							x = tx *  Tile.SIZE - box.sx - 0.01f;
+						} else {
+							x = tx * Tile.SIZE + Tile.SIZE + 0.01f;
+						}
+
+						collision = true;
+					} else {
+						if (dy > 0) {
+							y = ty *  Tile.SIZE - box.sy - 0.01f;
+							phys.onFloor = true;
+						} else {
+							y = ty * Tile.SIZE + Tile.SIZE + 0.01f;
+						}
+
+						collision = true;
+					}
+				}
+			}
+		}
+
+		phys.x = x;
+		phys.y = y;
+
+		// TODO: bounce, friction, etc.
+		if (collision) {
+			if (dx != 0) {
+				phys.dx = 0;
+			} else {
+				phys.dy = 0;
+			}
+		} else {
+			if (dy != 0) {
+				phys.onFloor = false;
+			}
+		}
+	}
+
+	private boolean overlaps(float x1, float y1, float sx1, float sy1, float x2, float y2, float sx2, float sy2) {
+		return (((x1 <= x2 + sx2 && x1 + sx1 >= x2) || (x2 <= x1 + sx1 && x2 + sx2 >= x1))
+				&& ((y1 <= y2 + sy2 && y1 + sy1 >= y2) || (y2 <= y1 + sy1 && y2 + sy2 >= y1)));
+	}
+
+	private Tile getTile(int tx, int ty) {
+		if (tx < 0 || tx >= _width || ty < 0 || ty >= _height) {
+			return Tile.wall;
+		}
+
+		return _tiles[tx + ty * _width];
 	}
 }

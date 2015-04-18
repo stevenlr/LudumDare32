@@ -8,6 +8,9 @@ public class PhysicalComponent extends Component {
 	public float y = 0;
 	public float dx = 0;
 	public float dy = 0;
+	public float ax = 0;
+	public float ay = 0;
+	public boolean onFloor = false;
 
 	public PhysicalComponent() {
 	}
