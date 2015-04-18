@@ -38,6 +38,9 @@ public class Level {
 	private float _lastValidY;
 	private float _goalX;
 	private float _goalY;
+	private boolean _hasStarted = false;
+	private boolean _isDone = false;
+	private float _animation = 0;
 
 	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
@@ -91,7 +94,7 @@ public class Level {
 					break;
 				case 0x0000ff:
 					tile = Tile.doorTop;
-					_goalX = x * Tile.SIZE * Tile.SIZE / 2;
+					_goalX = x * Tile.SIZE + Tile.SIZE / 2;
 					_goalY = (y + 1) * Tile.SIZE;
 					break;
 				}
@@ -111,6 +114,21 @@ public class Level {
 	}
 
 	public void update(float dt) {
+		if (!_hasStarted) {
+			_animation += dt;
+
+			if (_animation >= 1.0f) {
+				_hasStarted = true;
+			}
+
+			return;
+		}
+
+		if (_isDone) {
+			_animation -= dt;
+			return;
+		}
+
 		_animatedSpriteRenderSystem.update(dt);
 		_magneticMovementSystem.update(dt);
 		_playerControlSystem.update(dt);
@@ -128,6 +146,15 @@ public class Level {
 		} else {
 			_lastValidX = _player.getX();
 			_lastValidY = _player.getY();
+		}
+
+		dx = _player.getX() - _goalX;
+		dy = _player.getY() - _goalY;
+		dist = (float) Math.sqrt(dx * dx + dy * dy);
+
+		if (dist < 16) {
+			_isDone = true;
+			_animation = 1;
 		}
 
 		Particles.bloodParticles.update(dt);
@@ -281,5 +308,17 @@ public class Level {
 
 	public Player getPlayer() {
 		return _player;
+	}
+
+	public boolean isDone() {
+		return _isDone;
+	}
+
+	public boolean hasStarted() {
+		return _hasStarted;
+	}
+
+	public float getAnimation() {
+		return _animation;
 	}
 }

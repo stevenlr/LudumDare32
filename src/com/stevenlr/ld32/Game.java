@@ -64,8 +64,16 @@ public class Game implements IWaffleGame {
 		_level.draw(_gameCanvas.getRenderer());
 		_level.drawInventory(_inventoryCanvas.getRenderer());
 
-		r.beginBlit(_gameCanvas, 0, 0).blit();
-		r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
+		if (!_level.hasStarted() || _level.isDone()) {
+			r.setCustomComposite(false, Color.Black, 1 - _level.getAnimation());
+			r.beginBlit(_gameCanvas, 0, 0).blit();
+			r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
+			r.endCustomComposite();
+		} else {
+			r.beginBlit(_gameCanvas, 0, 0).blit();
+			r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
+		}
+
 	}
 
 	public float getTime() {
