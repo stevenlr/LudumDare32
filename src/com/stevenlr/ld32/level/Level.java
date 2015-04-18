@@ -12,11 +12,13 @@ import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.entities.Item;
 import com.stevenlr.ld32.entities.MetalCrate;
+import com.stevenlr.ld32.entities.Note;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.ld32.systems.AnimatedSpriteRenderSystem;
 import com.stevenlr.ld32.systems.ItemManagerSystem;
 import com.stevenlr.ld32.systems.MagneticMovementSystem;
+import com.stevenlr.ld32.systems.NoteManagerSystem;
 import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.ld32.systems.PlayerControlSystem;
 import com.stevenlr.ld32.systems.StaticTextureRenderSystem;
@@ -51,6 +53,7 @@ public class Level {
 	private AnimatedSpriteRenderSystem _animatedSpriteRenderSystem = new AnimatedSpriteRenderSystem();
 	private MagneticMovementSystem _magneticMovementSystem = new MagneticMovementSystem();
 	private ItemManagerSystem _itemManagerSystem = new ItemManagerSystem();
+	private NoteManagerSystem _noteManagerSystem = new NoteManagerSystem();
 	private String _deathCause;
 
 	public String getDeathCause() {
@@ -128,6 +131,13 @@ public class Level {
 					tile = Tile.empty;
 				}
 
+				if ((color & 0xfffff0) == 0x808080) {
+					int id = color & (~0x808080);
+
+					new Note(id, x * Tile.SIZE + Tile.SIZE / 2 - 16, y * Tile.SIZE + Tile.SIZE / 2 - 16);
+					tile = Tile.empty;
+				}
+
 				_tiles[i] = tile;
 			}
 		}
@@ -166,6 +176,7 @@ public class Level {
 		_playerControlSystem.update(dt);
 		_physicalMovementSystem.update(dt);
 		_itemManagerSystem.update(dt);
+		_noteManagerSystem.update(dt);
 
 		float dx = _player.getX() - _lastValidX;
 		float dy = _player.getY() - _lastValidY;

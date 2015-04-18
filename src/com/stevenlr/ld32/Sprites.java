@@ -37,6 +37,7 @@ public class Sprites {
 		public static SpriteSheet.Region orangeDevice = inventory.getRegion(1, 1);
 		public static SpriteSheet.Region knife = inventory.getRegion(2, 1);
 		public static SpriteSheet.Region chemicals = inventory.getRegion(3, 1);
+		public static SpriteSheet.Region note = inventory.getRegion(0, 2);
 
 		public static SpriteSheet.Region used = inventory.getRegion(0);
 		public static SpriteSheet.Region unused = inventory.getRegion(1);

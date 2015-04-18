@@ -80,7 +80,7 @@ public class Player extends Entity {
 		case KNIFE:
 			return "a knife";
 		case CHEMICALS:
-			return " some HK-21";
+			return "some HK-21";
 		default:
 			return "";
 		}
