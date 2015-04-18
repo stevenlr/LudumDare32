@@ -1,7 +1,7 @@
 Ludum Dare 32
 ====================
 
-Theme: TBA
+Theme: An unconventional weapon
 
 "I'm in" post: [http://ludumdare.com/compo/2015/04/13/im-in-probably-24/](http://ludumdare.com/compo/2015/04/13/im-in-probably-24/)
 
