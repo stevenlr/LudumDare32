@@ -46,7 +46,8 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				}
 			}
 
-			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)) {
+			if (Waffle.mouse.isPressedThisFrame(ControlsConfig.LAUNCH)
+					&& (player.selected == Player.BLUE_DEVICE || player.selected == Player.ORANGE_DEVICE)) {
 				float velocity = 800;
 				float clickX = Waffle.mouse.getMouseX() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetX();
 				float clickY = Waffle.mouse.getMouseY() / Game.PIXEL_SIZE + Game.instance.getLevel().getOffsetY();
@@ -54,12 +55,21 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 				float dx = clickX - phys.x - Player.SX / 2;
 				float dy = clickY - phys.y - Player.SY / 2;
 				float dist = (float) Math.sqrt(dx * dx + dy * dy);
+				float direction = 0;
+
+				if (player.selected == Player.BLUE_DEVICE && player.inventory[Player.BLUE_DEVICE]) {
+					direction = 1;
+				} else if (player.selected == Player.ORANGE_DEVICE && player.inventory[Player.ORANGE_DEVICE]){
+					direction = -1;
+				}
 
 				dx /= dist;
 				dy /= dist;
 
-				Game.instance.getLevel().removeOldDevices();
-				new MagneticDevice(phys.x + dx * 10, phys.y + dy * 10, dx * velocity + phys.dx, dy * velocity + phys.dy);
+				if (direction != 0) {
+					Game.instance.getLevel().removeOldDevices();
+					new MagneticDevice(phys.x + dx * 10, phys.y + dy * 10, dx * velocity + phys.dx, dy * velocity + phys.dy, direction);
+				}
 			}
 
 			if (Waffle.mouse.getWheelRotation() != 0) {

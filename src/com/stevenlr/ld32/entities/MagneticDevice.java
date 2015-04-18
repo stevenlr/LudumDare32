@@ -15,14 +15,20 @@ public class MagneticDevice extends Entity {
 
 	private PhysicalComponent _phys;
 
-	public MagneticDevice(float x, float y, float dx, float dy) {
+	public MagneticDevice(float x, float y, float dx, float dy, float direction) {
 		_phys = new PhysicalComponent(x, y, dx, dy);
 		CollisionComponent collision = new CollisionComponent(SX, SY, false);
-		AnimatedSpriteRenderComponent render = new AnimatedSpriteRenderComponent((AnimatedSprite.Instance) Sprites.blueBallAnimation.getBlittable());
+		AnimatedSpriteRenderComponent render;
+
+		if (direction > 0) {
+			render = new AnimatedSpriteRenderComponent((AnimatedSprite.Instance) Sprites.blueBallAnimation.getBlittable());
+		} else {
+			render = new AnimatedSpriteRenderComponent((AnimatedSprite.Instance) Sprites.orangeBallAnimation.getBlittable());
+		}
 
 		addComponent(PhysicalComponent.class, _phys);
 		addComponent(CollisionComponent.class, collision);
-		addComponent(MagneticDeviceComponent.class, new MagneticDeviceComponent());
+		addComponent(MagneticDeviceComponent.class, new MagneticDeviceComponent(direction));
 		addComponent(AnimatedSpriteRenderComponent.class, render);
 	}
 

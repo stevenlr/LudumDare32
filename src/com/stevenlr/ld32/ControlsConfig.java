@@ -9,8 +9,7 @@ public class ControlsConfig {
 	public static int LEFT = KeyEvent.VK_Q;
 	public static int RIGHT = KeyEvent.VK_D;
 
-	public static int ATTRACT = KeyEvent.VK_A;
-	public static int REPEL = KeyEvent.VK_Z;
+	public static int ACTION = KeyEvent.VK_S;
 
 	public static int LAUNCH = MouseEvent.BUTTON1;
 

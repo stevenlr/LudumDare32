@@ -46,18 +46,14 @@ public class MagneticMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 			float dist = (float) Math.sqrt(dx * dx + dy * dy);
 			float factor = 0;
 
-			if (Waffle.keyboard.isDown(ControlsConfig.ATTRACT)) {
-				factor += -1;
+			if (Waffle.keyboard.isDown(ControlsConfig.ACTION)) {
+				factor = device.getComponent(MagneticDeviceComponent.class).direction;
 			}
 
-			if (Waffle.keyboard.isDown(ControlsConfig.REPEL)) {
-				factor += 1;
-			}
+			float strength = (float) (3000 / Math.pow(dist / Tile.SIZE / 4, 2) * factor);
 
-			float force = (float) (10000 / Math.pow(dist / Tile.SIZE / 4, 2) * factor);
-
-			float ax = force * dx / dist;
-			float ay = force * dy / dist;
+			float ax = strength * dx / dist;
+			float ay = strength * dy / dist;
 
 			phys.ax += ax;
 			phys.ay += ay;
