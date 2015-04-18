@@ -66,13 +66,13 @@ public class Player extends Entity {
 	public void drawInventory(Renderer r) {
 		for (int i = 0; i < 4; ++i) {
 			if (i == _player.selected) {
-				r.beginBlit(Sprites.Inventory.used, 47 * i + 100, 0).blit();
+				r.beginBlit(Sprites.Inventory.used, 47 * i, 0).blit();
 			} else {
-				r.beginBlit(Sprites.Inventory.unused, 47 * i + 100, 0).blit();
+				r.beginBlit(Sprites.Inventory.unused, 47 * i, 0).blit();
 			}
 
 			if (_player.inventory[i]) {
-				r.beginBlit(getItemIcon(i), 47 * i + 100, 0).blit();
+				r.beginBlit(getItemIcon(i), 47 * i, 0).blit();
 			}
 		}
 	}

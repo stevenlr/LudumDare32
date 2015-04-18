@@ -10,7 +10,9 @@ public class Tile {
 
 	public static Tile empty = new TileWall(0);
 	public static Tile wall = new Tile(1, true, Sprites.tiles.getRegion(1));
-	public static Tile ground = new Tile(1, true, Sprites.tiles.getRegion(3));
+	public static Tile ground = new Tile(2, true, Sprites.tiles.getRegion(3));
+	public static Tile doorTop = new Tile(3, false, Sprites.tiles.getRegion(0, 2));
+	public static Tile doorBottom = new Tile(4, false, Sprites.tiles.getRegion(0, 3));
 
 	protected IBlittable _texture;
 	protected int _id;

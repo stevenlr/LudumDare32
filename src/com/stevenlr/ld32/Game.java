@@ -46,7 +46,7 @@ public class Game implements IWaffleGame {
 
 	@Override
 	public void init() {
-		_level = new Level("/level.png");
+		_level = new Level("/levels/level1.png");
 		_gameCanvas = new Canvas(LEVEL_WINDOW_WIDTH, LEVEL_WINDOW_HEIGHT);
 		_inventoryCanvas = new Canvas(INVENTORY_WINDOW_WIDTH, INVENTORY_WINDOW_HEIGHT);
 	}

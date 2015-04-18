@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.Particles;
 import com.stevenlr.ld32.components.CollisionComponent;
@@ -19,6 +20,8 @@ import com.stevenlr.ld32.systems.PhysicalMovementSystem;
 import com.stevenlr.ld32.systems.PlayerControlSystem;
 import com.stevenlr.ld32.systems.StaticTextureRenderSystem;
 import com.stevenlr.waffle.Waffle;
+import com.stevenlr.waffle.graphics.Color;
+import com.stevenlr.waffle.graphics.Font;
 import com.stevenlr.waffle.graphics.Renderer;
 
 public class Level {
@@ -33,6 +36,8 @@ public class Level {
 	private int _offsetY;
 	private float _lastValidX;
 	private float _lastValidY;
+	private float _goalX;
+	private float _goalY;
 
 	private PhysicalMovementSystem _physicalMovementSystem = new PhysicalMovementSystem();
 	private PlayerControlSystem _playerControlSystem = new PlayerControlSystem();
@@ -68,6 +73,10 @@ public class Level {
 					break;
 				case 0xffffff:
 					tile = Tile.empty;
+
+					if (y >= 1 && (img.getRGB(x, y - 1) & 0xffffff) == 0x0000ff) {
+						tile = Tile.doorBottom;
+					}
 					break;
 				case 0x000000:
 					tile = Tile.wall;
@@ -79,6 +88,11 @@ public class Level {
 				case 0xff8000:
 					tile = Tile.empty;
 					new MetalCrate(x * Tile.SIZE, y * Tile.SIZE);
+					break;
+				case 0x0000ff:
+					tile = Tile.doorTop;
+					_goalX = x * Tile.SIZE * Tile.SIZE / 2;
+					_goalY = (y + 1) * Tile.SIZE;
 					break;
 				}
 
@@ -257,6 +271,10 @@ public class Level {
 	public void drawInventory(Renderer r) {
 		r.save();
 		r.translate(9, 9);
+
+		r.drawText("Level 1", Color.White, Fonts.fontNormal, 0, 16, Font.HorizontalAlign.LEFT, Font.VerticalAlign.MIDDLE);
+
+		r.translate(200, 0);
 		_player.drawInventory(r);
 		r.restore();
 	}
