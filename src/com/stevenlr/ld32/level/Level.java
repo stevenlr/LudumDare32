@@ -184,4 +184,8 @@ public class Level {
 
 		return _tiles[tx + ty * _width];
 	}
+
+	public void removeOldDevices() {
+		_magneticMovementSystem.removeOldDevices();
+	}
 }
