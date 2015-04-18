@@ -23,22 +23,22 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 			PhysicalComponent phys = e.getComponent(PhysicalComponent.class);
 
 			if (Waffle.keyboard.isDown(KeyConfig.JUMP) && phys.onFloor) {
-				phys.ay -= 300;
+				phys.ay -= 26000;
 			}
 
 			if (Waffle.keyboard.isDown(KeyConfig.LEFT)) {
 				if (phys.onFloor) {
-					phys.ax -= 35;
+					phys.ax -= 2000;
 				} else {
-					phys.ax -= 2;
+					phys.ax -= 50;
 				}
 			}
 
 			if (Waffle.keyboard.isDown(KeyConfig.RIGHT)) {
 				if (phys.onFloor) {
-					phys.ax += 35;
+					phys.ax += 2000;
 				} else {
-					phys.ax += 2;
+					phys.ax += 50;
 				}
 			}
 		}

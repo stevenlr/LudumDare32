@@ -68,7 +68,7 @@ public class Level {
 			}
 		}
 
-		_player = new Player(_playerSpawnX, _playerSpawnY);
+		_player = new Player(_playerSpawnX * Tile.SIZE, _playerSpawnY * Tile.SIZE);
 	}
 
 	public void update(float dt) {
@@ -153,15 +153,15 @@ public class Level {
 			}
 		}
 
-		phys.x = x;
-		phys.y = y;
-
 		if (collision) {
 			if (dx != 0) {
 				phys.dx = 0;
 			} else {
 				phys.dy = 0;
 			}
+
+			phys.x = x;
+			phys.y = y;
 		} else {
 			if (dy != 0) {
 				phys.onFloor = false;
