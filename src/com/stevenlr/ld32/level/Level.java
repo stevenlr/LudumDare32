@@ -9,6 +9,7 @@ import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.components.AnimatedSpriteRenderComponent;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
+import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.systems.AnimatedSpriteRenderSystem;
@@ -64,6 +65,10 @@ public class Level {
 					break;
 				case 0x000000:
 					tile = Tile.wall;
+
+					if (y >= 1 && (img.getRGB(x, y - 1) & 0xffffff) != 0x000000) {
+						tile = Tile.ground;
+					}
 					break;
 				case 0xff8000:
 					tile = Tile.empty;
@@ -205,5 +210,12 @@ public class Level {
 
 	public int getOffsetY() {
 		return _offsetY;
+	}
+
+	public void drawInventory(Renderer r) {
+		r.save();
+		r.translate(9, 9);
+		_player.drawInventory(r);
+		r.restore();
 	}
 }

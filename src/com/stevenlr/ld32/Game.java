@@ -23,14 +23,18 @@ public class Game implements IWaffleGame {
 	public static final int HEIGHT = 300;
 	public static final int PIXEL_SIZE = 2;
 
+	public static final int INVENTORY_WINDOW_WIDTH = WIDTH;
+	public static final int INVENTORY_WINDOW_HEIGHT = 50;
+
 	public static final int LEVEL_WINDOW_WIDTH = WIDTH;
-	public static final int LEVEL_WINDOW_HEIGHT = HEIGHT - 50;
+	public static final int LEVEL_WINDOW_HEIGHT = HEIGHT - INVENTORY_WINDOW_HEIGHT;
 
 	public static Game instance = new Game();
 
 	private Level _level;
 
 	private Canvas _gameCanvas;
+	private Canvas _inventoryCanvas;
 
 	public static void main(String[] args) {
 		Waffle.instance.startGame(instance);
@@ -44,6 +48,7 @@ public class Game implements IWaffleGame {
 	public void init() {
 		_level = new Level("/level.png");
 		_gameCanvas = new Canvas(LEVEL_WINDOW_WIDTH, LEVEL_WINDOW_HEIGHT);
+		_inventoryCanvas = new Canvas(INVENTORY_WINDOW_WIDTH, INVENTORY_WINDOW_HEIGHT);
 	}
 
 	@Override
@@ -56,7 +61,9 @@ public class Game implements IWaffleGame {
 		r.fillRect(0, 0, WIDTH, HEIGHT, Color.Black);
 
 		_level.draw(_gameCanvas.getRenderer());
+		_level.drawInventory(_inventoryCanvas.getRenderer());
 
 		r.beginBlit(_gameCanvas, 0, 0).blit();
+		r.beginBlit(_inventoryCanvas, 0, LEVEL_WINDOW_HEIGHT).blit();
 	}
 }

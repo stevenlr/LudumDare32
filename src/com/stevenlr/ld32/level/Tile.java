@@ -8,12 +8,13 @@ public class Tile {
 
 	public static final int SIZE = 16;
 
-	public static Tile empty = new Tile(0, false, Sprites.tiles.getRegion(0));
+	public static Tile empty = new TileWall(0);
 	public static Tile wall = new Tile(1, true, Sprites.tiles.getRegion(1));
+	public static Tile ground = new Tile(1, true, Sprites.tiles.getRegion(3));
 
-	private IBlittable _texture;
-	private int _id;
-	private boolean _hasCollision;
+	protected IBlittable _texture;
+	protected int _id;
+	protected boolean _hasCollision;
 
 	public Tile(int id, boolean hasCollision, IBlittable texture) {
 		_hasCollision = hasCollision;

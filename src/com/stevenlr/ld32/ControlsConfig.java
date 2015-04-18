@@ -13,4 +13,9 @@ public class ControlsConfig {
 	public static int REPEL = KeyEvent.VK_Z;
 
 	public static int LAUNCH = MouseEvent.BUTTON1;
+
+	public static int SELECT_BLUE_DEVICE = KeyEvent.VK_1;
+	public static int SELECT_ORANGE_DEVICE = KeyEvent.VK_2;
+	public static int SELECT_KNIFE = KeyEvent.VK_3;
+	public static int SELECT_CHEMICALS = KeyEvent.VK_4;
 }

@@ -24,6 +24,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 		while (it.hasNext()) {
 			Entity e = it.next();
 			PhysicalComponent phys = e.getComponent(PhysicalComponent.class);
+			PlayerComponent player = e.getComponent(PlayerComponent.class);
 
 			if (Waffle.keyboard.isDown(ControlsConfig.JUMP) && phys.onFloor) {
 				phys.ay -= 26000;
@@ -59,6 +60,30 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 				Game.instance.getLevel().removeOldDevices();
 				new MagneticDevice(phys.x + dx * 10, phys.y + dy * 10, dx * velocity + phys.dx, dy * velocity + phys.dy);
+			}
+
+			if (Waffle.mouse.getWheelRotation() != 0) {
+				player.selected += Waffle.mouse.getWheelRotation();
+
+				while (player.selected < 0 || player.selected >= 4) {
+					player.selected = (player.selected + 4) % 4;
+				}
+			}
+
+			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SELECT_BLUE_DEVICE)) {
+				player.selected = Player.BLUE_DEVICE;
+			}
+
+			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SELECT_ORANGE_DEVICE)) {
+				player.selected = Player.ORANGE_DEVICE;
+			}
+
+			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SELECT_KNIFE)) {
+				player.selected = Player.KNIFE;
+			}
+
+			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SELECT_CHEMICALS)) {
+				player.selected = Player.CHEMICALS;
 			}
 		}
 	}

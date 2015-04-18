@@ -21,4 +21,17 @@ public class Sprites {
 
 	public static Sprite player = new Sprite("/player.png");
 	public static SpriteSheet tiles = new SpriteSheet("/tiles.png", 16, 16);
+
+	public static SpriteSheet inventory = new SpriteSheet("/inventory.png", 32, 32);
+
+	public static class Inventory {
+		public static SpriteSheet.Region blueDevice = inventory.getRegion(0, 1);
+		public static SpriteSheet.Region orangeDevice = inventory.getRegion(1, 1);
+		public static SpriteSheet.Region knife = inventory.getRegion(2, 1);
+		public static SpriteSheet.Region chemicals = inventory.getRegion(3, 1);
+
+		public static SpriteSheet.Region used = inventory.getRegion(0);
+		public static SpriteSheet.Region unused = inventory.getRegion(1);
+		public static SpriteSheet.Region absent = inventory.getRegion(2);
+	}
 }
