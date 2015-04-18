@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.stevenlr.ld32.ControlsConfig;
+import com.stevenlr.ld32.Particles;
 import com.stevenlr.ld32.components.MagneticComponent;
 import com.stevenlr.ld32.components.MagneticDeviceComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
@@ -65,7 +66,13 @@ public class MagneticMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 		Iterator<Entity> it = entities.iterator();
 
 		while (it.hasNext()) {
-			Waffle.entitySystem.removeEntity(it.next());
+			Entity e = it.next();
+
+			float x = e.getComponent(PhysicalComponent.class).x;
+			float y = e.getComponent(PhysicalComponent.class).y;
+
+			Particles.spawnSmokeParticles(x, y);
+			Waffle.entitySystem.removeEntity(e);
 		}
 	}
 }

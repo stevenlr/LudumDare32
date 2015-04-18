@@ -74,7 +74,12 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 				if (direction != 0) {
 					((GameScreen) Game.instance.getCurrentScreen()).getLevel().removeOldDevices();
-					new MagneticDevice(phys.x + dx * 10, phys.y + dy * 10, dx * velocity + phys.dx, dy * velocity + phys.dy, direction);
+					float x = phys.x + Player.SX / 2 + dx * 10;
+					float y = phys.y + Player.SY / 2 + dy * 10;
+
+					new MagneticDevice(x, y, dx * velocity + phys.dx, dy * velocity + phys.dy, direction);
+
+					Particles.spawnLaunchParticles(x, y, dx, dy);
 				}
 			}
 

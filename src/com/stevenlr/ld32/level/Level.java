@@ -139,8 +139,6 @@ public class Level {
 	}
 
 	public void update(float dt) {
-		Particles.bloodParticles.update(dt);
-
 		if (!_hasStarted) {
 			_animation += dt;
 
@@ -245,6 +243,8 @@ public class Level {
 		_player.draw(r);
 
 		Particles.bloodParticles.draw(r);
+		Particles.launchParticle.draw(r);
+		Particles.smokeParticles.draw(r);
 
 		r.restore();
 

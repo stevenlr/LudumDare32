@@ -44,6 +44,7 @@ public class Game implements IWaffleGame {
 			_nextScreen = null;
 		}
 
+		Particles.update(dt);
 		_time += dt;
 		_currentScreen.update(dt);
 	}

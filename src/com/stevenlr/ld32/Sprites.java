@@ -9,6 +9,7 @@ public class Sprites {
 	public static AnimatedSprite blueBallAnimation = new AnimatedSprite("/ball.png", 6, 6);
 	public static AnimatedSprite orangeBallAnimation = new AnimatedSprite("/ball.png", 6, 6);
 	public static AnimatedSprite bloodAnimation = new AnimatedSprite("/blood.png", 6, 6);
+	public static AnimatedSprite smokeAnimation = new AnimatedSprite("/smoke.png", 6, 6);
 
 	static {
 		blueBallAnimation.addFrame(0.3f, 0, 0);
@@ -21,9 +22,11 @@ public class Sprites {
 
 		for (int i = 0; i < 6; ++i) {
 			bloodAnimation.addFrame(0.12f, i);
+			smokeAnimation.addFrame(0.25f, i);
 		}
 	}
 
+	public static Sprite launchParticle = new Sprite("/launch_particle.png");
 	public static Sprite player = new Sprite("/player.png");
 	public static SpriteSheet tiles = new SpriteSheet("/tiles.png", 16, 16);
 
