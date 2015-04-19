@@ -1,18 +1,20 @@
 package com.stevenlr.ld32;
 
-import com.stevenlr.ld32.screens.EndScreen;
-import com.stevenlr.ld32.screens.GameScreen;
+import java.awt.Image;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import com.stevenlr.ld32.screens.IScreen;
 import com.stevenlr.ld32.screens.MainScreen;
-import com.stevenlr.ld32.screens.OutroScreen;
 import com.stevenlr.waffle.IWaffleGame;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.WaffleGame;
 import com.stevenlr.waffle.graphics.Color;
 import com.stevenlr.waffle.graphics.Renderer;
 
-@WaffleGame (
-		title = "Ludum Dare 32",
+@WaffleGame(
+		title = "HK-21 (Ludum Dare 32)",
 		viewportWidth = Game.WIDTH * Game.PIXEL_SIZE,
 		viewportHeight = Game.HEIGHT * Game.PIXEL_SIZE,
 		pixelAspect = Game.PIXEL_SIZE,
@@ -31,6 +33,15 @@ public class Game implements IWaffleGame {
 	private IScreen _nextScreen;
 
 	public static void main(String[] args) {
+		Image img = null;
+
+		try {
+			img = ImageIO.read(Game.class.getResourceAsStream("/icon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Waffle.instance.setWindowIcon(img);
 		Waffle.instance.startGame(instance);
 	}
 

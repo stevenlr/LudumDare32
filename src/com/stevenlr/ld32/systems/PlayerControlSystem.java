@@ -20,7 +20,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 	public PlayerControlSystem() {
 	}
 
-	public void update (float dt) {
+	public void update(float dt) {
 		List<Entity> entities = Waffle.entitySystem.getEntitiesWithComponents(PhysicalComponent.class, PlayerComponent.class);
 		Iterator<Entity> it = entities.iterator();
 
@@ -69,7 +69,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 				if (player.selected == Player.BLUE_DEVICE && player.inventory[Player.BLUE_DEVICE]) {
 					direction = -1;
-				} else if (player.selected == Player.ORANGE_DEVICE && player.inventory[Player.ORANGE_DEVICE]){
+				} else if (player.selected == Player.ORANGE_DEVICE && player.inventory[Player.ORANGE_DEVICE]) {
 					direction = 1;
 				}
 

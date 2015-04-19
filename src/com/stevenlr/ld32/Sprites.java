@@ -39,6 +39,7 @@ public class Sprites {
 	public static SpriteSheet inventory = new SpriteSheet("/inventory.png", 32, 32);
 
 	public static class Inventory {
+
 		public static SpriteSheet.Region blueDevice = inventory.getRegion(0, 1);
 		public static SpriteSheet.Region orangeDevice = inventory.getRegion(1, 1);
 		public static SpriteSheet.Region knife = inventory.getRegion(2, 1);

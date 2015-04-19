@@ -60,7 +60,7 @@ public class Player extends Entity {
 	}
 
 	public static IBlittable getItemIcon(int i) {
-		switch(i) {
+		switch (i) {
 		case BLUE_DEVICE:
 			return Sprites.Inventory.blueDevice;
 		case ORANGE_DEVICE:
@@ -75,7 +75,7 @@ public class Player extends Entity {
 	}
 
 	public static String getItemName(int i) {
-		switch(i) {
+		switch (i) {
 		case BLUE_DEVICE:
 			return "the attractor";
 		case ORANGE_DEVICE:

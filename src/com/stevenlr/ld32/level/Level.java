@@ -300,7 +300,7 @@ public class Level {
 				if (overlaps(tx * Tile.SIZE, ty * Tile.SIZE, Tile.SIZE, Tile.SIZE, x, y, box.sx, box.sy)) {
 					if (dx != 0) {
 						if (dx > 0) {
-							x = tx *  Tile.SIZE - box.sx;
+							x = tx * Tile.SIZE - box.sx;
 						} else {
 							x = tx * Tile.SIZE + Tile.SIZE;
 						}
@@ -308,7 +308,7 @@ public class Level {
 						collision = true;
 					} else {
 						if (dy > 0) {
-							y = ty *  Tile.SIZE - box.sy;
+							y = ty * Tile.SIZE - box.sy;
 							phys.onFloor = true;
 						} else {
 							y = ty * Tile.SIZE + Tile.SIZE;
@@ -401,7 +401,7 @@ public class Level {
 
 		for (int y = y1; y <= y2; ++y) {
 			for (int x = x1; x <= x2; ++x) {
-				if (getTile(x, y).getId() ==  Tile.acid.getId()) {
+				if (getTile(x, y).getId() == Tile.acid.getId()) {
 					return true;
 				}
 			}
