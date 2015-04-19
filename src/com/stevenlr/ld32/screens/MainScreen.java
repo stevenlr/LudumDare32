@@ -17,7 +17,7 @@ public class MainScreen implements IScreen {
 	@Override
 	public void update(float dt) {
 		if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SPACE)) {
-			Game.instance.setNextScreen(new GameScreen());
+			Game.instance.setNextScreen(new IntroScreen());
 		}
 	}
 

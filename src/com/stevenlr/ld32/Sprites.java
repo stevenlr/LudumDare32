@@ -30,8 +30,11 @@ public class Sprites {
 
 	public static Sprite launchParticle = new Sprite("/launch_particle.png");
 	public static Sprite bullet = new Sprite("/bullet.png");
+	public static Sprite scene = new Sprite("/scene.png");
 	public static SpriteSheet tiles = new SpriteSheet("/tiles.png", 16, 16);
 	public static SpriteSheet drone = new SpriteSheet("/drone.png", 16, 16);
+	public static SpriteSheet player = new SpriteSheet("/player.png", 12, 30);
+	public static SpriteSheet general = new SpriteSheet("/general.png", 24, 30);
 
 	public static SpriteSheet inventory = new SpriteSheet("/inventory.png", 32, 32);
 
