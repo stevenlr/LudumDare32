@@ -23,7 +23,7 @@ public class IntroScreen implements IScreen {
 
 		_lines.add("Doctor P...");
 		_lines.add("If we want any chance of winning the war");
-		_lines.add("we need to get you chemical, the HK-21,");
+		_lines.add("we need to get your chemical, the HK-21,");
 		_lines.add("into this missile and launch it");
 		_lines.add("on the ennemy territory.");
 		_lines.add("Their crops will be destroyed");
