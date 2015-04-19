@@ -56,7 +56,7 @@ public class Game implements IWaffleGame {
 			e.printStackTrace();
 		}
 
-		_music.setGain(0.8f);
+		_music.setGain(0.9f);
 		_music.loop();
 
 		_currentScreen = new MainScreen();
