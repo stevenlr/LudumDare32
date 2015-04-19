@@ -32,7 +32,7 @@ public class MainScreen implements IScreen {
 	@Override
 	public void draw(Renderer r) {
 		r.fillRect(0, 0, Game.WIDTH, Game.HEIGHT, Color.Black);
-		r.beginBlit(Sprites.Inventory.title, Game.WIDTH / 2, 50).center().blit();
+		r.beginBlit(Sprites.Inventory.title, Game.WIDTH / 2, 50, 2.0f).center().blit();
 
 		printLine(r, "        A-D   Move", 0);
 		printLine(r, "      Space   Jump", 1);
