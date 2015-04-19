@@ -29,7 +29,9 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 			Entity e = it.next();
 			PhysicalComponent phys = e.getComponent(PhysicalComponent.class);
 
-			phys.ay += GRAVITY * dt;
+			if (phys.hasGravity) {
+				phys.ay += GRAVITY * dt;
+			}
 
 			if (phys.onFloor) {
 				phys.dx *= FLOOR_FRICTION;

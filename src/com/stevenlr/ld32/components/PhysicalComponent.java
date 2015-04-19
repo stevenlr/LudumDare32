@@ -11,6 +11,7 @@ public class PhysicalComponent extends Component {
 	public float ax = 0;
 	public float ay = 0;
 	public boolean onFloor = false;
+	public boolean hasGravity = true;
 
 	public PhysicalComponent() {
 	}
@@ -20,5 +21,13 @@ public class PhysicalComponent extends Component {
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	public PhysicalComponent(float x, float y, float dx, float dy, boolean hasGravity) {
+		this.x = x;
+		this.y = y;
+		this.dx = dx;
+		this.dy = dy;
+		this.hasGravity = hasGravity;
 	}
 }
