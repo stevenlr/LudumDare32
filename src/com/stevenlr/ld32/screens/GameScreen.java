@@ -3,6 +3,7 @@ package com.stevenlr.ld32.screens;
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.level.Level;
@@ -53,6 +54,7 @@ public class GameScreen implements IScreen {
 				|| Waffle.keyboard.isPressedThisFrame(ControlsConfig.RESTART)) {
 			Waffle.entitySystem.clearAll();
 			_level.reload();
+			Sounds.ok.play();
 		}
 
 		if (_level.isDone() && _level.getAnimation() <= 0) {

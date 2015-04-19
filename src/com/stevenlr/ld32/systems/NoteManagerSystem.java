@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.components.NoteComponent;
 import com.stevenlr.ld32.components.StaticComponent;
 import com.stevenlr.ld32.entities.Player;
@@ -35,6 +36,7 @@ public class NoteManagerSystem extends com.stevenlr.waffle.entitysystem.systems.
 
 				Waffle.entitySystem.removeEntity(e);
 				Game.instance.setNextScreen(new NoteScreen(id, Game.instance.getCurrentScreen()));
+				Sounds.grab.play();
 			}
 		}
 	}

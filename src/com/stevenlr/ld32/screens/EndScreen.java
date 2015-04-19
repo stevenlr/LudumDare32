@@ -6,6 +6,7 @@ import java.util.List;
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.graphics.Color;
 import com.stevenlr.waffle.graphics.Font;
@@ -44,8 +45,13 @@ public class EndScreen implements IScreen {
 
 		if (_time >= 2) {
 			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SPACE)) {
+				Sounds.ok.play();
 				Game.instance.setNextScreen(new MainScreen());
 			}
+		}
+
+		if ((int) (_time * 100) % 10 == 0 && _time <= 2) {
+			Sounds.print.play();
 		}
 	}
 

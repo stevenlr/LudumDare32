@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Particles;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.components.MagneticComponent;
 import com.stevenlr.ld32.components.MagneticDeviceComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
@@ -33,6 +34,10 @@ public class MagneticMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 
 		if (device == null) {
 			return;
+		}
+
+		if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.ACTION)) {
+			Sounds.activate.play();
 		}
 
 		float centerX = device.getX();

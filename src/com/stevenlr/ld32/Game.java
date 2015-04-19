@@ -1,5 +1,6 @@
 package com.stevenlr.ld32;
 
+import com.stevenlr.ld32.screens.EndScreen;
 import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.ld32.screens.IScreen;
 import com.stevenlr.ld32.screens.MainScreen;

@@ -3,6 +3,7 @@ package com.stevenlr.ld32.screens;
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.graphics.Color;
 import com.stevenlr.waffle.graphics.Font;
@@ -22,6 +23,7 @@ public class FoundItemScreen implements IScreen {
 	public void update(float dt) {
 		if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SPACE)) {
 			Game.instance.setNextScreen(_parentScreen);
+			Sounds.ok.play();
 		}
 	}
 

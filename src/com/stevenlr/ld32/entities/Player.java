@@ -1,5 +1,6 @@
 package com.stevenlr.ld32.entities;
 
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.Sprites;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.KillableComponent;
@@ -108,5 +109,6 @@ public class Player extends Entity {
 
 	public void die() {
 		_player.isDead = true;
+		Sounds.die.play();
 	}
 }

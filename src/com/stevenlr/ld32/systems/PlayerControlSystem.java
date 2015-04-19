@@ -6,6 +6,7 @@ import java.util.List;
 import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.Particles;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.entities.MagneticDevice;
@@ -31,6 +32,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 
 			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.JUMP) && phys.onFloor) {
 				phys.ay -= 16000;
+				Sounds.jump.play();
 			}
 
 			if (Waffle.keyboard.isDown(ControlsConfig.LEFT)) {
@@ -83,6 +85,7 @@ public class PlayerControlSystem extends com.stevenlr.waffle.entitysystem.system
 					new MagneticDevice(x, y, dx * velocity + phys.dx, dy * velocity + phys.dy, direction);
 
 					Particles.spawnLaunchParticles(x, y, dx, dy);
+					Sounds.launch.play();
 				}
 			}
 

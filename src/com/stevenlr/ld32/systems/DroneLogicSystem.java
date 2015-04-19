@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.Sprites;
 import com.stevenlr.ld32.components.DroneComponent;
 import com.stevenlr.ld32.components.StaticComponent;
@@ -53,6 +54,7 @@ public class DroneLogicSystem extends com.stevenlr.waffle.entitysystem.systems.S
 
 				new Bullet(x + dx * 16, y + dy * 16, dx * velocity, dy * velocity);
 				drone.nextShot = 0.7f + rand.nextFloat() * 0.4f;
+				Sounds.shoot.play();
 			}
 		}
 	}

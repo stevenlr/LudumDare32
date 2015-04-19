@@ -4,6 +4,7 @@ import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.Particles;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.Sprites;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.graphics.Color;
@@ -57,17 +58,21 @@ public class OutroScreen implements IScreen {
 
 			if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.SPACE)) {
 				_phase = 3 + _currentChoice;
+				Sounds.ok.play();
 			}
 		} else if (_phase == 3) {
 			Particles.spawnBloodParticles(216, 170);
+			Sounds.die.play();
 			_isPlayerDead = true;
 			_phase = 6;
 		} else if (_phase == 4) {
 			Particles.spawnBloodParticles(216, 170);
+			Sounds.die.play();
 			_isPlayerDead = true;
 			_phase = 6;
 		} else if (_phase == 5) {
 			Particles.spawnBloodParticles(190, 170);
+			Sounds.die.play();
 			_isGeneralDead = true;
 			_phase = 6;
 		} else if (_phase == 6) {

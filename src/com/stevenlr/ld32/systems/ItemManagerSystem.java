@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.stevenlr.ld32.Game;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.components.ItemComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.components.StaticComponent;
@@ -37,6 +38,7 @@ public class ItemManagerSystem extends com.stevenlr.waffle.entitysystem.systems.
 				player.getComponent(PlayerComponent.class).inventory[item] = true;
 				Waffle.entitySystem.removeEntity(e);
 				Game.instance.setNextScreen(new FoundItemScreen(Game.instance.getCurrentScreen(), Player.getItemName(item)));
+				Sounds.grab.play();
 			}
 		}
 	}

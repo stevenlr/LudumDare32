@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.Particles;
+import com.stevenlr.ld32.Sounds;
 import com.stevenlr.ld32.components.BulletComponent;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.DroneComponent;
@@ -82,6 +83,7 @@ public class BulletLogicSystem extends com.stevenlr.waffle.entitysystem.systems.
 						level.setDeathCause("You got shot");
 					} else if (e2.hasComponent(DroneComponent.class)) {
 						Particles.spawnSmokeParticles(x + box.sx / 2, y + box.sy / 2);
+						Sounds.explode.play();
 					}
 
 					Waffle.entitySystem.removeEntity(e);
