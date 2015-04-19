@@ -72,5 +72,9 @@ public class IntroScreen implements IScreen {
 			r.drawText("Press [space]", Color.Gray, Fonts.fontSmall,
 					20, 70, Font.HorizontalAlign.LEFT, Font.VerticalAlign.TOP);
 		}
+
+		if (_animation < 1 || _currentLine >= _lines.size()) {
+			r.endCustomComposite();
+		}
 	}
 }

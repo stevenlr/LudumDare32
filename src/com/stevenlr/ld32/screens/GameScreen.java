@@ -4,6 +4,7 @@ import com.stevenlr.ld32.ControlsConfig;
 import com.stevenlr.ld32.Fonts;
 import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.components.PlayerComponent;
+import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.level.Level;
 import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.graphics.Canvas;
@@ -56,7 +57,10 @@ public class GameScreen implements IScreen {
 
 		if (_level.isDone() && _level.getAnimation() <= 0) {
 			if (_currentLevel == NB_LEVELS) {
-				Game.instance.setNextScreen(new EndScreen(true));
+				boolean hasKnife = _level.getPlayer().getComponent(PlayerComponent.class).inventory[Player.KNIFE];
+				boolean hasChemical = _level.getPlayer().getComponent(PlayerComponent.class).inventory[Player.CHEMICALS];
+
+				Game.instance.setNextScreen(new OutroScreen(hasKnife, hasChemical));
 			} else {
 				_currentLevel = Math.min(_currentLevel + 1, NB_LEVELS);
 				loadLevel();
