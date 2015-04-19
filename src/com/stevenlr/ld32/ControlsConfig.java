@@ -8,10 +8,11 @@ public class ControlsConfig {
 	public static final int SPACE = KeyEvent.VK_SPACE;
 	public static final int RESTART = KeyEvent.VK_R;
 	public static int JUMP = KeyEvent.VK_SPACE;
-	public static int LEFT = KeyEvent.VK_Q;
+	public static int LEFT = KeyEvent.VK_A;
 	public static int RIGHT = KeyEvent.VK_D;
 
 	public static int ACTION = KeyEvent.VK_S;
+	public static int MUSIC = KeyEvent.VK_M;
 
 	public static int LAUNCH = MouseEvent.BUTTON1;
 

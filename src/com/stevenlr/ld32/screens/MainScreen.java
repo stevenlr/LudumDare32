@@ -25,7 +25,7 @@ public class MainScreen implements IScreen {
 
 	private void printLine(Renderer r, String text, int i) {
 		r.drawText(text, Color.LightGray, Fonts.fontSmall,
-				100, 110 + i * 17,
+				100, 105 + i * 16,
 				Font.HorizontalAlign.LEFT, Font.VerticalAlign.BOTTOM);
 	}
 
@@ -41,6 +41,7 @@ public class MainScreen implements IScreen {
 		printLine(r, "    1-2-3-4   Select slot", 4);
 		printLine(r, "Mouse wheel   Select slot", 5);
 		printLine(r, " Left click   Launch device", 6);
+		printLine(r, "          M   Toggle music", 7);
 
 		r.drawText("Press [space] to start", Color.LightGray, Fonts.fontSmall,
 				Game.WIDTH / 2, Game.HEIGHT - 50,

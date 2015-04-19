@@ -5,8 +5,7 @@
 	<property name="build" value="build" />
 	<property name="dist" value="dist" />
 	<property name="libdir" value="libs" />
-	<property name="lib" value="Waffle.jar" />
-	<property name="jarfile" value="LudumDare32.jar" />
+	<property name="jarfile" value="HK-21.jar" />
 	<property name="mainclass" value="com.stevenlr.ld32.Game" />
 
 	<target name="build">
@@ -14,7 +13,9 @@
 		<mkdir dir="${build}" />
 		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" target="1.7" source="1.7">
 			<classpath>
-				<pathelement path="${libdir}/${lib}" />
+				<pathelement path="${libdir}/Waffle.jar" />
+				<pathelement path="${libdir}/jorbis.jar" />
+				<pathelement path="${libdir}/easyogg.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -23,8 +24,8 @@
 		<mkdir dir="${dist}" />
 		<jar jarfile="${dist}/${jarfile}">
 			<fileset dir="${build}" />
-			<fileset dir="${res}" />
-			<zipgroupfileset dir="${libdir}" includes="${lib}" />
+			<fileset dir="${res}" excludes="**/Thumbs.db" />
+			<zipgroupfileset dir="${libdir}" includes="*.jar" />
 			<manifest>
 				<attribute name="Main-Class" value="${mainclass}" />
 			</manifest>

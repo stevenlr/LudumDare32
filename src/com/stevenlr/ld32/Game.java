@@ -12,13 +12,14 @@ import com.stevenlr.waffle.Waffle;
 import com.stevenlr.waffle.WaffleGame;
 import com.stevenlr.waffle.graphics.Color;
 import com.stevenlr.waffle.graphics.Renderer;
+import org.newdawn.easyogg.OggClip;
 
 @WaffleGame(
 		title = "HK-21 (Ludum Dare 32)",
 		viewportWidth = Game.WIDTH * Game.PIXEL_SIZE,
 		viewportHeight = Game.HEIGHT * Game.PIXEL_SIZE,
 		pixelAspect = Game.PIXEL_SIZE,
-		showFps = true
+		showFps = false
 )
 public class Game implements IWaffleGame {
 
@@ -31,6 +32,8 @@ public class Game implements IWaffleGame {
 	private float _time = 0;
 	private IScreen _currentScreen;
 	private IScreen _nextScreen;
+
+	private OggClip _music;
 
 	public static void main(String[] args) {
 		Image img = null;
@@ -47,6 +50,15 @@ public class Game implements IWaffleGame {
 
 	@Override
 	public void init() {
+		try {
+			_music = new OggClip(Game.class.getResourceAsStream("/sounds/music.ogg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		_music.setGain(0.8f);
+		_music.loop();
+
 		_currentScreen = new MainScreen();
 	}
 
@@ -55,6 +67,14 @@ public class Game implements IWaffleGame {
 		if (_nextScreen != null) {
 			_currentScreen = _nextScreen;
 			_nextScreen = null;
+		}
+
+		if (Waffle.keyboard.isPressedThisFrame(ControlsConfig.MUSIC)) {
+			if (_music.stopped()) {
+				_music.loop();
+			} else {
+				_music.stop();
+			}
 		}
 
 		Particles.update(dt);

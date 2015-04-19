@@ -55,7 +55,7 @@ public class NoteScreen implements IScreen {
 			drawLine(r, "too many losses to pursue this war.", 4);
 			drawLine(r, "The central government has proposed", 5);
 			drawLine(r, "a peace treaty. Yet we are still armed", 6);
-			drawLine(r, "and could end this thread once and for", 7);
+			drawLine(r, "and could end this threat once and for", 7);
 			drawLine(r, "all.", 8);
 		}
 
