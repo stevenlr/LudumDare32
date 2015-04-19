@@ -2,6 +2,7 @@ package com.stevenlr.ld32.entities;
 
 import com.stevenlr.ld32.Sprites;
 import com.stevenlr.ld32.components.CollisionComponent;
+import com.stevenlr.ld32.components.KillableComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
 import com.stevenlr.ld32.level.Tile;
@@ -34,6 +35,7 @@ public class Player extends Entity {
 		addComponent(PhysicalComponent.class, _phys);
 		addComponent(CollisionComponent.class, collision);
 		addComponent(PlayerComponent.class, _player);
+		addComponent(KillableComponent.class, new KillableComponent());
 	}
 
 	public void draw(Renderer r) {

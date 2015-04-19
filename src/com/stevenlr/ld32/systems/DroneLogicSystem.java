@@ -51,7 +51,7 @@ public class DroneLogicSystem extends com.stevenlr.waffle.entitysystem.systems.S
 				dx /= dist;
 				dy /= dist;
 
-				new Bullet(x + dx * 8, y + dy * 8, dx * velocity, dy * velocity);
+				new Bullet(x + dx * 16, y + dy * 16, dx * velocity, dy * velocity);
 				drone.nextShot = 0.7f + rand.nextFloat() * 0.4f;
 			}
 		}

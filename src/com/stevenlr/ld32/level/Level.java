@@ -219,6 +219,10 @@ public class Level {
 		}
 	}
 
+	public void setDeathCause(String deathCause) {
+		_deathCause = deathCause;
+	}
+
 	private void respawn() {
 		if (_player != null) {
 			Waffle.entitySystem.removeEntity(_player);
@@ -332,12 +336,12 @@ public class Level {
 		}
 	}
 
-	private boolean overlaps(float x1, float y1, float sx1, float sy1, float x2, float y2, float sx2, float sy2) {
+	public boolean overlaps(float x1, float y1, float sx1, float sy1, float x2, float y2, float sx2, float sy2) {
 		return (((x1 < x2 + sx2 && x1 + sx1 > x2) || (x2 < x1 + sx1 && x2 + sx2 > x1))
 				&& ((y1 < y2 + sy2 && y1 + sy1 > y2) || (y2 < y1 + sy1 && y2 + sy2 > y1)));
 	}
 
-	private Tile getTile(int tx, int ty) {
+	public Tile getTile(int tx, int ty) {
 		if (tx < 0 || tx >= _width || ty < 0 || ty >= _height) {
 			return Tile.wall;
 		}
