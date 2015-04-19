@@ -13,13 +13,13 @@ import com.stevenlr.waffle.graphics.Renderer;
 
 public class GameScreen implements IScreen {
 
-	public static final int NB_LEVELS = 5;
+	public static final int NB_LEVELS = 7;
 	public static final int INVENTORY_WINDOW_WIDTH = Game.WIDTH;
 	public static final int INVENTORY_WINDOW_HEIGHT = 50;
 	public static final int LEVEL_WINDOW_WIDTH = Game.WIDTH;
 	public static final int LEVEL_WINDOW_HEIGHT = Game.HEIGHT - INVENTORY_WINDOW_HEIGHT;
 
-	private int _currentLevel = 1;
+	private int _currentLevel = 7;
 	private Level _level;
 	private Canvas _gameCanvas;
 	private Canvas _inventoryCanvas;

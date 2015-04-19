@@ -7,6 +7,7 @@ import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
 import com.stevenlr.ld32.components.PlayerComponent;
+import com.stevenlr.ld32.components.StaticComponent;
 import com.stevenlr.ld32.level.Level;
 import com.stevenlr.ld32.level.Tile;
 import com.stevenlr.ld32.screens.GameScreen;
@@ -63,8 +64,11 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 		CollisionComponent box = entity.getComponent(CollisionComponent.class);
 
 		List<Entity> entities = Waffle.entitySystem.getEntitiesWithComponents(PhysicalComponent.class, CollisionComponent.class);
-		Iterator<Entity> it = entities.iterator();
+		List<Entity> entities2 = Waffle.entitySystem.getEntitiesWithComponents(StaticComponent.class, CollisionComponent.class);
 
+		entities.addAll(entities2);
+
+		Iterator<Entity> it = entities.iterator();
 		float x = phys.x + dx;
 		float y = phys.y + dy;
 		boolean collision = false;
@@ -77,15 +81,29 @@ public class PhysicalMovementSystem extends com.stevenlr.waffle.entitysystem.sys
 				continue;
 			}
 
-			PhysicalComponent phys2 = e.getComponent(PhysicalComponent.class);
 			CollisionComponent box2 = e.getComponent(CollisionComponent.class);
+
+			float xx = 0;
+			float yy = 0;
+
+			if (e.hasComponent(PhysicalComponent.class)) {
+				PhysicalComponent phys2 = e.getComponent(PhysicalComponent.class);
+
+				xx = phys2.x;
+				yy = phys2.y;
+			} else {
+				StaticComponent pos = e.getComponent(StaticComponent.class);
+
+				xx = pos.x;
+				yy = pos.y;
+			}
 
 			if (isPlayer && !box2.collidesWithPlayer) {
 				continue;
 			}
 
-			if (overlaps(x, y, box.sx, box.sy, phys2.x, phys2.y, box2.sx, box2.sy)) {
-				float[] penetration = getShortestPenetration(x, y, box.sx, box.sy, phys2.x, phys2.y, box2.sx, box2.sy);
+			if (overlaps(x, y, box.sx, box.sy, xx, yy, box2.sx, box2.sy)) {
+				float[] penetration = getShortestPenetration(x, y, box.sx, box.sy, xx, yy, box2.sx, box2.sy);
 
 				x -= penetration[0];
 				y -= penetration[1];

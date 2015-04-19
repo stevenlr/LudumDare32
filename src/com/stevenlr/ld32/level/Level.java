@@ -10,6 +10,7 @@ import com.stevenlr.ld32.Game;
 import com.stevenlr.ld32.Particles;
 import com.stevenlr.ld32.components.CollisionComponent;
 import com.stevenlr.ld32.components.PhysicalComponent;
+import com.stevenlr.ld32.entities.Drone;
 import com.stevenlr.ld32.entities.Item;
 import com.stevenlr.ld32.entities.MetalCrate;
 import com.stevenlr.ld32.entities.Note;
@@ -121,6 +122,10 @@ public class Level {
 					break;
 				case 0xff0000:
 					tile = Tile.acid;
+					break;
+				case 0xff00ff:
+					tile = Tile.empty;
+					new Drone(x * Tile.SIZE, y * Tile.SIZE);
 					break;
 				}
 

@@ -29,7 +29,9 @@ public class Sprites {
 	}
 
 	public static Sprite launchParticle = new Sprite("/launch_particle.png");
+	public static Sprite bullet = new Sprite("/bullet.png");
 	public static SpriteSheet tiles = new SpriteSheet("/tiles.png", 16, 16);
+	public static SpriteSheet drone = new SpriteSheet("/drone.png", 16, 16);
 
 	public static SpriteSheet inventory = new SpriteSheet("/inventory.png", 32, 32);
 
