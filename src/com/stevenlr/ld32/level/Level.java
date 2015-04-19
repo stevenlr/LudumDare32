@@ -17,6 +17,7 @@ import com.stevenlr.ld32.entities.Note;
 import com.stevenlr.ld32.entities.Player;
 import com.stevenlr.ld32.screens.GameScreen;
 import com.stevenlr.ld32.systems.AnimatedSpriteRenderSystem;
+import com.stevenlr.ld32.systems.DroneLogicSystem;
 import com.stevenlr.ld32.systems.ItemManagerSystem;
 import com.stevenlr.ld32.systems.MagneticMovementSystem;
 import com.stevenlr.ld32.systems.NoteManagerSystem;
@@ -55,6 +56,7 @@ public class Level {
 	private MagneticMovementSystem _magneticMovementSystem = new MagneticMovementSystem();
 	private ItemManagerSystem _itemManagerSystem = new ItemManagerSystem();
 	private NoteManagerSystem _noteManagerSystem = new NoteManagerSystem();
+	private DroneLogicSystem _droneLogicSystem = new DroneLogicSystem();
 	private String _deathCause;
 
 	public String getDeathCause() {
@@ -182,6 +184,7 @@ public class Level {
 		_physicalMovementSystem.update(dt);
 		_itemManagerSystem.update(dt);
 		_noteManagerSystem.update(dt);
+		_droneLogicSystem.update(dt);
 
 		float dx = _player.getX() - _lastValidX;
 		float dy = _player.getY() - _lastValidY;
@@ -256,6 +259,7 @@ public class Level {
 
 		_staticTextureRenderSystem.draw(r);
 		_animatedSpriteRenderSystem.draw(r);
+		_droneLogicSystem.draw(r);
 		_player.draw(r);
 
 		Particles.bloodParticles.draw(r);
